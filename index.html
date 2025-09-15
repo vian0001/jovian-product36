@@ -1,0 +1,1282 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menggunakan Address List dan Filter Aplikasi Layer di MikroTik</title>
+    <style>
+
+/* Styling untuk container gambar */
+
+.image-container {
+  margin: 30px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  max-width: 100%;
+  position: relative;
+}
+
+.image-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: all 0.4s ease;
+}
+
+.image-container:hover img {
+  filter: brightness(1.1);
+}
+
+.image-caption {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7), transparent);
+  padding: 15px 20px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover .image-caption {
+  transform: translateY(0);
+}
+
+@keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
+@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+
+    /* Portfolio Button Styling */
+
+.portfolio-button {
+position: fixed;
+bottom: 30px;
+right: 30px;
+z-index: 1000;
+background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+color: var(--text-primary);
+border: none;
+border-radius: 50px;
+padding: 15px 25px;
+font-family: 'Inter', sans-serif;
+font-weight: 600;
+font-size: 1rem;
+cursor: pointer;
+box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4);
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+gap: 10px;
+overflow: hidden;
+text-decoration: none;
+}
+.portfolio-button:hover {
+transform: translateY(-5px) scale(1.05);
+box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+}
+.portfolio-button::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg,
+transparent,
+rgba(255, 255, 255, 0.2),
+transparent);
+animation: shineEffect 3s infinite;
+}
+.portfolio-icon {
+font-size: 1.2rem;
+animation: pulse 2s infinite;
+}
+@keyframes shineEffect {
+0% { left: -100%; }
+20% { left: 100%; }
+100% { left: 100%; }
+}
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.2); }
+100% { transform: scale(1); }
+}
+.attention-ripple {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 100%;
+height: 100%;
+border-radius: 50px;
+border: 2px solid var(--accent-color);
+animation: ripple 2s infinite;
+opacity: 0;
+}
+@keyframes ripple {
+0% {
+width: 100%;
+height: 100%;
+opacity: 0.8;
+}
+100% {
+width: 200%;
+height: 200%;
+opacity: 0;
+}
+}
+{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --accent-color: #06b6d4;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #334155;
+    --bg-light: #f8fafc;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: #475569;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Tech Background Pattern */
+.tech-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(220, 38, 38, 0.08) 0%, transparent 50%);
+}
+
+.circuit-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    opacity: 0.03;
+    background-image: 
+        linear-gradient(90deg, var(--primary-color) 1px, transparent 1px),
+        linear-gradient(var(--primary-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: circuitMove 20s linear infinite;
+}
+
+@keyframes circuitMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Floating particles */
+.tech-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% { 
+        transform: translateY(100vh) translateX(0px);
+        opacity: 0;
+    }
+    10% { 
+        opacity: 0.6;
+    }
+    90% { 
+        opacity: 0.6;
+    }
+    100% { 
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 100px 20px 80px;
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.1) 0%, 
+        rgba(6, 182, 212, 0.1) 50%, 
+        rgba(5, 150, 105, 0.1) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(37, 99, 235, 0.1),
+        transparent
+    );
+    animation: headerScan 10s linear infinite;
+}
+
+@keyframes headerScan {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.main-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color), var(--success-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    text-shadow: 0 0 50px rgba(37, 99, 235, 0.3);
+    animation: titleGlow 4s ease-in-out infinite alternate;
+    position: relative;
+}
+
+@keyframes titleGlow {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.2); }
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.author-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: cardFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes cardFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-10px); }
+}
+
+.card-header {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.author-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    text-align: left;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 80px;
+    margin-right: 15px;
+}
+
+.info-value {
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Section styling */
+.section {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 40px 0;
+    position: relative;
+    backdrop-filter: blur(20px);
+    transition: all 0.4s ease;
+    animation: sectionSlide 0.8s ease-out;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.section:nth-child(even) {
+    animation: sectionSlideRight 0.8s ease-out;
+}
+
+@keyframes sectionSlide {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes sectionSlideRight {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.section:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 12px 48px rgba(37, 99, 235, 0.2);
+    transform: translateY(-8px);
+}
+
+.section-title {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 2px;
+}
+
+/* Sub-section titles */
+.subsection-title {
+    font-family: 'Inter', sans-serif;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.subsection-title::before {
+    content: '—'; /* Simple dash or similar indicator */
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+/* Code blocks with typing effect */
+.code-terminal {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 25px 0;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.code-terminal::before {
+    content: '$ mikrotik@router:~';
+    color: var(--success-color);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.code-line {
+    color: var(--text-primary);
+    margin: 8px 0;
+    position: relative;
+    padding-left: 20px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    width: fit-content;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: pre;
+}
+
+.code-line.typing {
+    opacity: 1;
+    border-right: 2px solid var(--accent-color);
+    animation: blink-cursor 1s infinite;
+}
+
+.code-line.typed {
+    opacity: 1;
+    border-right: none;
+}
+
+@keyframes blink-cursor {
+    0%, 50% { border-color: var(--accent-color); }
+    51%, 100% { border-color: transparent; }
+}
+
+.code-line:hover {
+    background: rgba(37, 99, 235, 0.1);
+    padding-left: 25px;
+    border-radius: 6px;
+}
+
+.code-line::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-size: 0.8rem;
+}
+
+.comment {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.string {
+    color: var(--warning-color);
+    font-weight: 400;
+}
+
+.keyword {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Alert boxes */
+.tech-alert {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.1), 
+        rgba(6, 182, 212, 0.1));
+    border: 1px solid var(--primary-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    position: relative;
+    animation: alertPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes alertPulse {
+    0% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.2); }
+    100% { box-shadow: 0 0 30px rgba(37, 99, 235, 0.4); }
+}
+
+.tech-alert::before {
+    content: '🔧 TEKNOLOGI INFO';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--bg-primary);
+    color: var(--primary-color);
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+}
+
+.security-alert {
+    background: linear-gradient(135deg, 
+        rgba(220, 38, 38, 0.1), 
+        rgba(217, 119, 6, 0.1));
+    border: 1px solid var(--danger-color);
+    border-left: 4px solid var(--danger-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    position: relative;
+    animation: securityBlink 2s ease-in-out infinite alternate;
+}
+
+@keyframes securityBlink {
+    0% { border-left-color: var(--danger-color); }
+    100% { border-left-color: var(--warning-color); }
+}
+
+.security-alert::before {
+    content: '🛡 KEAMANAN';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--bg-primary);
+    color: var(--danger-color);
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid var(--danger-color);
+}
+
+.conclusion-box {
+    background: linear-gradient(135deg, 
+        rgba(5, 150, 105, 0.1), 
+        rgba(37, 99, 235, 0.1));
+    border: 1px solid var(--success-color);
+    border-left: 4px solid var(--success-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    position: relative;
+    animation: conclusionGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes conclusionGlow {
+    0% { box-shadow: 0 0 20px rgba(5, 150, 105, 0.2); }
+    100% { box-shadow: 0 0 30px rgba(5, 150, 105, 0.4); }
+}
+
+.conclusion-box::before {
+    content: '📝 KESIMPULAN';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--bg-primary);
+    color: var(--success-color);
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid var(--success-color);
+}
+
+/* Bibliography */
+.bibliography {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08), 
+        rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    margin-top: 60px;
+    backdrop-filter: blur(20px);
+    animation: biblioFade 1.5s ease-out;
+}
+
+@keyframes biblioFade {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bibliography h3 {
+    color: var(--accent-color);
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.bibliography ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.bibliography li {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 50px;
+}
+
+.bibliography li::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-size: 1.2rem;
+}
+
+.bibliography li:hover {
+    color: var(--text-primary);
+    transform: translateX(10px);
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.05));
+}
+
+.bibliography a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    word-break: break-all;
+}
+
+.bibliography a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Progress bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--success-color));
+    z-index: 1000;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .section {
+        padding: 25px 20px;
+        margin: 30px 0;
+    }
+    
+    .container {
+        padding: 40px 15px;
+    }
+
+    .code-terminal {
+        padding: 20px;
+        font-size: 0.9rem;
+    }
+
+    .author-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Smooth animations */
+.fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ 
+
+img, a {
+-webkit-user-drag: none;
+-khtml-user-drag: none;
+-moz-user-drag: none;
+-o-user-drag: none;
+user-drag: none;
+}
+
+</style>
+
+
+
+
+
+
+<!-- Portfolio Button -->
+<a href="https://jovian-portofolio02.vercel.app/" target="_blank" class="portfolio-button">
+    <span class="portfolio-icon">🚀</span>
+    Lihat Portfolio Saya
+    <div class="attention-ripple"></div>
+</a>
+
+<!-- Tech Background -->
+<div class="tech-bg"></div>
+<div class="circuit-pattern"></div>
+<div class="tech-particles" id="techParticles"></div>
+
+<!-- Header -->
+<div class="header">
+    <h1 class="main-title">MIKROTIK ROUTEROS</h1>
+    <div class="subtitle">Memonitor Status Wireless</div>
+    <div class="subtitle">Metode pemantauan koneksi nirkabel dan troubleshooting</div>
+    
+    <div class="author-card">
+        <div class="card-header">Informasi Penulis</div>
+        <div class="author-info">
+            <div class="info-item">
+                <span class="info-label">Penulis:</span>
+                <span class="info-value">Jovian Ekasakta</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Guru:</span>
+                <span class="info-value">Arief Wahyudin</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Kelas:</span>
+                <span class="info-value">XI TJKT 03</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Sekolah:</span>
+                <span class="info-value">Dwija Bhakti 01 Jombang</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+       <div class="section fade-in">
+            <h2 class="section-title"># topologi yang digunakan</h2>
+
+                                                <div class="image-container">
+          <img src="topologi.png" alt="SERVICE IP pada MikroTik RouterOS">
+          <div class="image-caption">Tampilan topologi di gns3</div>
+        </div>
+
+        </div>
+
+
+<div class="container">
+    <!-- Subtopik 1: Registration Table -->
+    <div class="section fade-in">
+        <h2 class="section-title">1. REGISTRATION-TABLE (DAFTAR KLIEN TERDAFTAR)</h2>
+
+                                                        <div class="image-container">
+          <img src="no.png" alt="SERVICE IP pada MikroTik RouterOS">
+          <div class="image-caption">Tampilan topologi di gns3</div>
+        </div>
+
+        <h3 class="subsection-title">Ringkasan</h3>
+        <p>Dari sumber MikroTik Wiki (2024), registration-table adalah fitur RouterOS yang menampilkan daftar klien yang terasosiasi ke interface wireless MikroTik. Fitur ini menyediakan informasi penting seperti MAC address, tx-rate, rx-rate, signal-strength, uptime, dan last-activity untuk setiap klien yang terhubung.</p>
+        
+        <p>Dari sumber Manual RouterOS (2024), perintah registration-table juga menyediakan statistik detail seperti jumlah paket, bytes, framing, nilai signal minimum/rata-rata/maksimum yang berguna untuk troubleshooting saat menggunakan mode Access Point.</p>
+
+        <h3 class="subsection-title">Perintah CLI Utama</h3>
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print</span></div>
+            <div class="code-line comment"># Tampilkan semua klien yang terdaftar dengan detail standar.</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print stats</span></div>
+            <div class="code-line comment"># Tampilkan dengan statistik tambahan (signal-strength, ccq, tx-rate/rx-rate min/avg/max).</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print where interface=<span class="string">wlan1</span></span></div>
+            <div class="code-line comment"># Filter hanya untuk klien pada interface wlan1.</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print detail where mac-address=<span class="string">AA:BB:CC:DD:EE:FF</span></span></div>
+            <div class="code-line comment"># Lihat informasi lengkap sebuah klien berdasarkan MAC address.</div>
+        </div>
+
+        <h3 class="subsection-title">Contoh Interpretasi Output</h3>
+        <p>Dari sumber MTCNA Study Guide (2023), nilai signal-strength (dBm) adalah parameter penting yang ditampilkan di registration-table. Semakin mendekati 0 nilai dBm, semakin kuat sinyal tersebut. Umumnya, sinyal -50 dBm dianggap sangat baik, -60 dBm baik, -70 dBm cukup, dan di bawah -80 dBm dianggap lemah.</p>
+        
+        <p>Dari sumber RouterOS Manual (2024), field uptime dan last-activity di registration-table sangat berguna untuk mendeteksi apakah klien sering terputus lalu tersambung kembali. Jika last-activity kecil tapi tidak ada trafik, bisa jadi ada "ghost client" yang hanya mengirim keepalive frames.</p>
+
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print stats</span></div>
+            <div class="code-line comment"># Contoh output:</div>
+            <div class="code-line">Flags: R - running</div>
+            <div class="code-line"> #   MAC-ADDRESS       INTERFACE  SIGNAL... TX-RATE    RX-RATE    UPTIME  LAST-ACTIVITY</div>
+            <div class="code-line"> 0 R AA:BB:CC:DD:EE:FF wlan1      -62dBm... 65.0Mbps   65.0Mbps   1h20m2s 0s</div>
+            <div class="code-line"> 1 R FF:EE:DD:CC:BB:AA wlan1      -72dBm... 39.0Mbps   39.0Mbps   32m15s  2s</div>
+        </div>
+
+        <div class="conclusion-box">
+            <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa registration-table adalah alat monitoring paling dasar dan penting untuk melihat siapa yang terhubung ke interface wireless MikroTik dan metrik kunci (signal, rate, uptime) yang membantu diagnosa awal konektivitas wireless.</p>
+        </div>
+    </div>
+
+    <!-- Subtopik 2: Memantau Sinyal, RSSI, dan SNR -->
+    <div class="section fade-in">
+        <h2 class="section-title">2. MEMANTAU SINYAL (RSSI), NOISE, DAN SNR</h2>
+
+        <h3 class="subsection-title">Ringkasan</h3>
+        <p>Dari sumber MikroTik Wiki (2024), RouterOS menyediakan field signal-strength dan signal-to-noise (SNR) di registration-table dan di beberapa perintah monitor untuk menilai kualitas radio link. Nilai sinyal biasanya disajikan dalam dBm dan menjadi indikator utama kualitas koneksi.</p>
+        
+        <p>Dari sumber Manual MTCNA (2024), interpretasi praktis untuk nilai RSSI adalah: -30 sampai -50 dBm = sangat baik; -60 sampai -70 dBm = fair; kurang dari -80 dBm = lemah dan rawan disconnect. SNR yang tinggi (>20 dB) umumnya menandakan link yang bersih dari interferensi.</p>
+
+        <h3 class="subsection-title">Perintah CLI Utama</h3>
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print stats</span></div>
+            <div class="code-line comment"># Melihat signal-strength, signal-to-noise (jika tersedia), dan informasi sinyal per-channel.</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless monitor wlan1 once</span></div>
+            <div class="code-line comment"># Monitor singkat untuk mengetahui level sinyal & noise — sering dipakai saat alignment antena.</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless info</span></div>
+            <div class="code-line comment"># Menampilkan informasi radio (frequency list, tx-power, dsb.) yang membantu troubleshooting.</div>
+        </div>
+
+        <h3 class="subsection-title">Contoh Analisa</h3>
+        <p>Dari sumber MikroTik Wireless Troubleshooting (2023), jika registration-table menunjukkan signal-strength -85 dBm dan CCQ rendah, beberapa solusi yang mungkin dilakukan adalah: turunkan jarak, periksa kondisi antena/line-of-sight, atau ubah channel/frekuensi untuk menghindari interferensi.</p>
+        
+        <p>Dari sumber RouterOS Training Materials (2024), perintah /interface wireless monitor sangat berguna saat physically aligning antena karena memberikan angka real-time dari sinyal dan noise. Ini memungkinkan teknisi untuk menyesuaikan posisi antena sambil melihat perubahan nilai secara langsung.</p>
+
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless monitor wlan1 once</span></div>
+            <div class="code-line comment"># Contoh output:</div>
+            <div class="code-line">                status: running</div>
+            <div class="code-line">                band: 5ghz-a/n</div>
+            <div class="code-line">          frequency: 5180MHz</div>
+            <div class="code-line">             channel-width: 20MHz</div>
+            <div class="code-line">          noise-floor: -101dBm</div>
+            <div class="code-line">         overall-tx-ccq: 77%</div>
+            <div class="code-line">        registered-clients: 5</div>
+        </div>
+
+        <div class="tech-alert">
+            <p>Signal-to-Noise Ratio (SNR) dihitung dari perbedaan antara kekuatan sinyal (RSSI) dan noise floor. Misalnya, jika RSSI = -60 dBm dan noise floor = -90 dBm, maka SNR = 30 dB, yang dianggap sangat baik.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa pengukuran RSSI, noise, dan SNR melalui registration-table dan perintah monitor adalah langkah wajib untuk menilai kualitas link wireless dan menentukan tindakan perbaikan seperti alignment, pemilihan channel, atau pengaturan tx-power.</p>
+        </div>
+    </div>
+
+    <!-- Subtopik 3: CCQ, Tx/Rx Rate, dan Throughput -->
+    <div class="section fade-in">
+        <h2 class="section-title">3. CCQ, TX/RX-RATE, DAN THROUGHPUT</h2>
+
+        <h3 class="subsection-title">Ringkasan</h3>
+        <p>Dari sumber MikroTik Wiki (2024), CCQ (Client Connection Quality) adalah metrik yang diperlihatkan pada RouterOS yang mengukur efisiensi layer 2 dari koneksi wireless. Nilai CCQ mendekati 100% menunjukkan koneksi yang efisien dengan sedikit retransmisi packet.</p>
+        
+        <p>Dari sumber RouterOS Manual (2024), tx-rate dan rx-rate (minimal/rata-rata/maksimal) ditampilkan di registration-table; perbedaan besar antara tx dan rx bisa menunjukkan masalah duplex, interferensi, atau ketidakcocokan data-rate yang dikonfigurasi.</p>
+
+        <h3 class="subsection-title">Perintah CLI Utama</h3>
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print stats</span></div>
+            <div class="code-line comment"># Periksa rx-rate dan tx-rate serta ccq (jika tersedia).</div>
+            
+            <div class="code-line"><span class="keyword">/tool sniffer quick interface=wlan1 duration=10s</span></div>
+            <div class="code-line comment"># Tangkap paket cepat untuk estimasi throughput dan jenis trafik (gunakan dengan hati-hati).</div>
+            
+            <div class="code-line"><span class="keyword">/tool bandwidth-test <span class="string">192.168.88.10</span> direction=both user=<span class="string">admin</span></span></div>
+            <div class="code-line comment"># Uji throughput antara router dan client/peer (perhatikan firewall/NAT).</div>
+        </div>
+
+        <h3 class="subsection-title">Interpretasi & Tindakan</h3>
+        <p>Dari sumber MikroTik Wireless Troubleshooting (2023), CCQ rendah yang disertai penurunan tx-rate biasanya mengindikasikan masalah seperti interferensi, jarak terlalu jauh, antena tidak sejajar, atau masalah driver/firmware pada perangkat klien.</p>
+        
+        <p>Dari sumber Wireless Network Best Practices (2024), membandingkan tx-rate dan rx-rate dapat memberikan indikasi arah masalah (dari AP ke client atau sebaliknya). Pengujian bandwidth dengan tool seperti bandwidth-test penting untuk verifikasi performa end-to-end.</p>
+
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/tool bandwidth-test 192.168.88.10 direction=both</span></div>
+            <div class="code-line comment"># Contoh output:</div>
+            <div class="code-line">  status: done</div>
+            <div class="code-line">  direction: both</div>
+            <div class="code-line">  tx-total-packets: 30242</div>
+            <div class="code-line">  rx-total-packets: 30223</div>
+            <div class="code-line">  tx-throughput: 43.1Mbps</div>
+            <div class="code-line">  rx-throughput: 42.9Mbps</div>
+            <div class="code-line">  tx-total-bytes: 33.9MB</div>
+            <div class="code-line">  rx-total-bytes: 33.8MB</div>
+        </div>
+
+        <div class="security-alert">
+            <p>Perhatikan bahwa penggunaan tool bandwidth-test dapat membebani jaringan dan perangkat secara signifikan. Jangan melakukan pengujian saat jaringan sedang digunakan untuk aktivitas penting.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa monitoring CCQ dan tx/rx-rate melalui registration-table, ditambah pengujian throughput dengan bandwidth-test atau sniffer, diperlukan untuk memvalidasi performa link wireless secara menyeluruh.</p>
+        </div>
+    </div>
+
+    <!-- Subtopik 4: Monitoring Real-time & Alat Diagnostik -->
+    <div class="section fade-in">
+        <h2 class="section-title">4. MONITORING REAL-TIME & ALAT DIAGNOSTIK</h2>
+
+        <h3 class="subsection-title">Ringkasan</h3>
+        <p>Dari sumber MikroTik Wiki (2024), RouterOS menyertakan beberapa alat monitoring real-time seperti <code>/tool torch</code>, <code>/tool sniffer</code>, dan <code>/interface wireless monitor</code> untuk pemantauan trafik, capture paket, dan pengukuran sinyal saat alignment.</p>
+        
+        <p>Dari sumber Network Troubleshooting Best Practices (2023), pendekatan sistematis yang mengkombinasikan log, torch, capture, dan pemeriksaan ARP/route biasanya paling efektif dalam menemukan akar masalah konektivitas wireless.</p>
+
+        <h3 class="subsection-title">Perintah CLI Utama (Real-time)</h3>
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/tool torch interface=wlan1 src-address=192.168.88.10</span></div>
+            <div class="code-line comment"># Lihat paket real-time keluar/masuk ke IP tertentu.</div>
+            
+            <div class="code-line"><span class="keyword">/tool sniffer set filter-interface=wlan1 streaming-enabled=yes</span></div>
+            <div class="code-line"><span class="keyword">/tool sniffer start</span></div>
+            <div class="code-line comment"># Mulai packet capture (kirim ke Wireshark via FTP/PC jika perlu).</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless monitor wlan1 once</span></div>
+            <div class="code-line comment"># Satu kali baca parameter radio (alignment/testing).</div>
+        </div>
+
+        <h3 class="subsection-title">Log dan Alarm</h3>
+        <p>Dari sumber RouterOS Manual (2024), perintah <code>/log print</code> dengan filter topik terkait sangat berguna untuk menemukan pesan-pesan seperti "link down", "authentication failure", atau "gateway unreachable" yang membantu identifikasi masalah.</p>
+        
+        <p>Dari sumber MTCNA Study Guide (2023), mengkombinasikan log dengan monitoring real-time memudahkan korelasi antara event (misalnya disconnect) dengan perubahan pada parameter radio (sinyal, CCQ, dsb.) untuk mempersempit kemungkinan penyebab masalah.</p>
+
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/log print where topics~"wireless|error|auth"</span></div>
+            <div class="code-line comment"># Contoh output:</div>
+            <div class="code-line">sep/13 11:32:01 wireless,info wlan1: station AA:BB:CC:DD:EE:FF connected</div>
+            <div class="code-line">sep/13 11:31:45 wireless,error wlan1: station FF:EE:DD:CC:BB:AA authentication failed</div>
+            <div class="code-line">sep/13 10:50:22 wireless,info wlan1: changed frequency to 5180MHz</div>
+        </div>
+
+        <div class="tech-alert">
+            <p>Menggunakan kombinasi registration-table, torch, dan log dapat membantu mengidentifikasi masalah seperti klien yang sering disconnect/reconnect, masalah autentikasi, atau masalah throughput rendah yang tidak terdeteksi pada metrik sederhana.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa kombinasi alat real-time RouterOS (torch, sniffer, monitor) ditambah pemeriksaan log memberikan kemampuan diagnosa yang kuat untuk masalah performa dan konektivitas wireless.</p>
+        </div>
+    </div>
+
+    <!-- Subtopik 5: Troubleshooting Praktis (indikator & solusi cepat) -->
+    <div class="section fade-in">
+        <h2 class="section-title">5. TROUBLESHOOTING PRAKTIS BERDASARKAN INDIKATOR</h2>
+
+        <h3 class="subsection-title">Ringkasan</h3>
+        <p>Dari sumber MikroTik Troubleshooting Guide (2024), beberapa penyebab umum gangguan wireless termasuk: interferensi channel, antena atau konektor rusak, konfigurasi mode/rate yang tidak kompatibel, dan aturan firewall/NAT yang keliru.</p>
+        
+        <p>Dari sumber Network Troubleshooting Best Practices (2023), langkah sistematis untuk troubleshooting (cek fisik → cek registration-table/ARP → cek sinyal/CCQ → tool torch/sniffer → periksa log) direkomendasikan agar proses pemecahan masalah lebih efisien.</p>
+
+        <h3 class="subsection-title">Checklist Perbaikan Cepat</h3>
+        <div class="code-terminal">
+            <div class="code-line">1) <span class="keyword">/interface print</span> → pastikan interface wireless RUNNING.</div>
+            <div class="code-line">2) <span class="keyword">/ip arp print</span> → pastikan MAC gateway / klien terlihat.</div>
+            <div class="code-line">3) <span class="keyword">/interface wireless registration-table print stats</span> → cek signal, ccq, rate.</div>
+            <div class="code-line">4) <span class="keyword">/tool torch interface=wlan1</span> → lihat trafik real-time.</div>
+            <div class="code-line">5) <span class="keyword">/log print where topics~"wireless|error|auth"</span> → cari pesan error.</div>
+        </div>
+
+        <h3 class="subsection-title">Contoh Kasus & Solusi</h3>
+        <p>Dari sumber MikroTik Wiki (2024), jika klien sering terputus dengan signal -85 dBm, beberapa solusi yang bisa dicoba: ubah posisi antena, naikkan tx-power secara moderat, atau pindahkan ke channel yang kurang padat/interferensi.</p>
+        
+        <p>Dari sumber Wireless Network Best Practices (2024), ketika CCQ rendah tapi RSSI bagus, biasanya masalahnya adalah interferensi. Periksa dengan frequency scan dan coba ubah channel-width atau gunakan mode legacy yang lebih kompatibel.</p>
+
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless frequency-monitor wlan1</span></div>
+            <div class="code-line comment"># Memeriksa gangguan di spektrum frekuensi (memerlukan RouterOS v7+).</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless scan wlan1</span></div>
+            <div class="code-line comment"># Memeriksa AP tetangga dan penggunaan channel.</div>
+            
+            <div class="code-line"><span class="keyword">/interface wireless set wlan1 channel-width=20/40mhz-Ce</span></div>
+            <div class="code-line comment"># Mengubah channel width untuk menghindari interferensi.</div>
+        </div>
+
+        <div class="security-alert">
+            <p>Jangan meningkatkan tx-power melebihi batas legal di wilayah Anda. Power yang terlalu tinggi tidak selalu meningkatkan performa, bahkan bisa memperburuk interferensi dan mengurangi battery life perangkat mobile.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa troubleshooting wireless yang efektif mengikuti alur logis (fisik → layer2 → layer3 → monitoring real-time) dan memanfaatkan perintah CLI RouterOS untuk mengidentifikasi dan mengatasi masalah.</p>
+        </div>
+    </div>
+
+    <!-- Bibliography -->
+    <div class="bibliography">
+        <h3>DAFTAR PUSTAKA</h3>
+        <ul>
+            <li><strong>MikroTik Wiki.</strong> 2024. <em>Manual: Interface/Wireless</em>. <a href="https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless" target="_blank">https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless</a>. Diakses pada 13 September 2025, pukul 07:15 sampai 07:45 WIB.</li>
+            
+            <li><strong>RouterOS Manual.</strong> 2024. <em>Registration Table / Wireless Monitoring</em>. <a href="https://help.mikrotik.com/docs/display/ROS/Wireless" target="_blank">https://help.mikrotik.com/docs/display/ROS/Wireless</a>. Diakses pada 13 September 2025, pukul 08:00 sampai 08:30 WIB.</li>
+            
+            <li><strong>MTCNA Study Guide.</strong> 2023. <em>Wireless Registration Table & Signal Interpretation</em>. <a href="https://training.mikrotik.com/docs" target="_blank">https://training.mikrotik.com/docs</a>. Diakses pada 13 September 2025, pukul 09:00 sampai 09:25 WIB.</li>
+            
+            <li><strong>MikroTik Wireless Troubleshooting.</strong> 2023. <em>Common Wireless Issues & Solutions</em>. <a href="https://help.mikrotik.com/docs/display/ROS/Wireless+Troubleshooting" target="_blank">https://help.mikrotik.com/docs/display/ROS/Wireless+Troubleshooting</a>. Diakses pada 13 September 2025, pukul 10:00 sampai 10:35 WIB.</li>
+            
+            <li><strong>RouterOS Training Materials.</strong> 2024. <em>Wireless Signal & Performance Monitoring</em>. <a href="https://mum.mikrotik.com/presentations" target="_blank">https://mum.mikrotik.com/presentations</a>. Diakses pada 13 September 2025, pukul 11:15 sampai 11:40 WIB.</li>
+            
+            <li><strong>Network Troubleshooting Best Practices.</strong> 2023. <em>Systematic Approach to Wireless Issues</em>. <a href="https://www.networkcomputing.com/wireless" target="_blank">https://www.networkcomputing.com/wireless</a>. Diakses pada 13 September 2025, pukul 12:30 sampai 13:00 WIB.</li>
+            
+            <li><strong>Wireless Network Best Practices.</strong> 2024. <em>Optimizing MikroTik Wireless Networks</em>. <a href="https://forum.mikrotik.com/viewforum.php?f=2" target="_blank">https://forum.mikrotik.com/viewforum.php?f=2</a>. Diakses pada 13 September 2025, pukul 14:20 sampai 14:45 WIB.</li>
+            
+            <li><strong>MikroTik Troubleshooting Guide.</strong> 2024. <em>Wireless Connectivity Troubleshooting</em>. <a href="https://help.mikrotik.com/docs/display/ROS/Troubleshooting" target="_blank">https://help.mikrotik.com/docs/display/ROS/Troubleshooting</a>. Diakses pada 13 September 2025, pukul 15:30 sampai 16:00 WIB.</li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    // Tech particles animation
+    function createTechParticles() {
+        const particlesContainer = document.getElementById('techParticles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Scroll progress
+    function updateScrollProgress() {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (scrollTop / scrollHeight) * 100;
+        document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    }
+
+    // Typing effect for code lines
+    function typeText(element, text, speed = 30) {
+        return new Promise(resolve => {
+            element.classList.add('typing');
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent = text.slice(0, i + 1);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.remove('typing');
+                    element.classList.add('typed');
+                    resolve();
+                }
+            }
+            type();
+        });
+    }
+    
+    async function animateCodeBlock(terminal) {
+        const codeLines = terminal.querySelectorAll('.code-line:not(.typed)');
+        for (const line of codeLines) {
+            const originalHTML = line.innerHTML;
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = originalHTML;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            
+            // Clear the line content, but keep child spans for styling
+            const children = Array.from(line.childNodes).map(child => child.cloneNode(true));
+            line.innerHTML = '';
+            
+            await typeText(line, textContent, 20);
+            
+            // Restore original HTML with spans
+            line.innerHTML = originalHTML;
+            line.classList.add('typed');
+        }
+    }
+
+    // Animate code blocks with typing effect
+    function setupCodeBlockObserver() {
+        const codeTerminals = document.querySelectorAll('.code-terminal');
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const terminal = entry.target;
+                    // For already typed lines, just show them
+                    terminal.querySelectorAll('.code-line.typed').forEach(line => line.style.opacity = '1');
+                    
+                    animateCodeBlock(terminal);
+                    obs.unobserve(terminal); // Animate only once
+                }
+            });
+        }, { threshold: 0.3 });
+
+        codeTerminals.forEach(terminal => {
+            observer.observe(terminal);
+        });
+    }
+
+    // Fade in animation on scroll
+    function animateOnScroll() {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    // Section hover effects
+    function addSectionEffects() {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.addEventListener('mouseenter', () => {
+                section.style.transform = 'translateY(-8px)';
+            });
+            section.addEventListener('mouseleave', () => {
+                section.style.transform = 'translateY(0)';
+            });
+        });
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+        createTechParticles();
+        animateOnScroll();
+        setupCodeBlockObserver();
+        addSectionEffects();
+        
+        // Scroll events
+        window.addEventListener('scroll', updateScrollProgress);
+        
+        // Smooth scrolling for better UX
+        document.documentElement.style.scrollBehavior = 'smooth';
+    });
+
+    // Add responsive particle count
+    function adjustParticleCount() {
+        const width = window.innerWidth;
+        const particlesContainer = document.getElementById('techParticles');
+        const currentParticles = particlesContainer.children.length;
+        const targetParticles = width < 768 ? 20 : width < 1200 ? 35 : 50;
+        
+        if (currentParticles !== targetParticles) {
+            particlesContainer.innerHTML = '';
+            for (let i = 0; i < targetParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+    }
+
+    window.addEventListener('resize', adjustParticleCount);
+
+       // Anti-Copy JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mencegah seleksi teks
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Mencegah penyalinan teks (Ctrl+C)
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            // Opsional: Tampilkan pesan
+            alert('Maaf, penyalinan konten pada halaman ini tidak diizinkan!');
+            return false;
+        });
+
+        // Mencegah pemotongan teks (Ctrl+X)
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Mencegah penempelan teks (Ctrl+V)
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Mencegah klik kanan
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Mencegah drag & drop
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    });
+
+ 
+</script>
+
+</body>
+</html>
