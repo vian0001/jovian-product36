@@ -764,360 +764,553 @@ user-drag: none;
 </style>
 
 
-
-
-
-
-<!-- Portfolio Button -->
-<a href="https://jovian-portofolio02.vercel.app/" target="_blank" class="portfolio-button">
-    <span class="portfolio-icon">🚀</span>
-    Lihat Portfolio Saya
-    <div class="attention-ripple"></div>
-</a>
-
-<!-- Tech Background -->
-<div class="tech-bg"></div>
-<div class="circuit-pattern"></div>
-<div class="tech-particles" id="techParticles"></div>
-
 <!-- Header -->
 <div class="header">
     <h1 class="main-title">MIKROTIK ROUTEROS</h1>
-    <div class="subtitle">Memonitor Status Wireless</div>
-    <div class="subtitle">Metode pemantauan koneksi nirkabel dan troubleshooting</div>
+    <div class="subtitle">Memonitor status wireless (registration, sinyal, dsb.) pada MikroTik</div>
+    <div class="subtitle">Panduan lengkap memantau kualitas koneksi dan status klien wireless</div>
     
-<div class="author-card">
-    <div class="card-header">Informasi Penulis</div>
-    <div class="author-info">
-        <div class="info-item">
-            <span class="info-label">Penulis:</span>
-            <span class="info-value">Jovian Ekasakta</span>
+    <div class="author-card">
+        <div class="card-header">Informasi Penulis</div>
+        <div class="author-info">
+            <div class="info-item">
+                <span class="info-label">Penulis:</span>
+                <span class="info-value">Jovian Ekasakta</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Guru:</span>
+                <span class="info-value">Arief Wahyudin</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Kelas:</span>
+                <span class="info-value">XI TJKT 03</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Sekolah:</span>
+                <span class="info-value">Dwija Bhakti 01 Jombang</span>
+            </div>
         </div>
-        <div class="info-item">
-            <span class="info-label">Guru:</span>
-            <span class="info-value">Arief Wahyudin</span>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Section: Registration Table -->
+    <div class="section fade-in">
+        <h2 class="section-title">1. WIRELESS REGISTRATION TABLE</h2>
+
+        <div class="image-container">
+            <img src="registration-table.png" alt="Wireless Registration Table di MikroTik">
+            <div class="image-caption">Tampilan Wireless Registration Table pada interface Winbox MikroTik.</div>
         </div>
-        <div class="info-item">
-            <span class="info-label">Kelas:</span>
-            <span class="info-value">XI TJKT 03</span>
+
+        <h3 class="subsection-title">Pengertian Registration Table</h3>
+        
+        <p>Dari sumber MikroTik Documentation (2024), Registration Table adalah fitur pada MikroTik RouterOS yang menampilkan informasi lengkap tentang klien wireless yang saat ini terhubung ke access point. Fitur ini berfungsi sebagai sistem monitoring yang memungkinkan administrator jaringan untuk memantau status koneksi setiap perangkat, kekuatan sinyal, kualitas koneksi, serta parameter penting lainnya secara real-time.</p>
+        
+        <p>Dari sumber Network Computing (2023), Registration Table menjadi salah satu alat paling penting untuk troubleshooting masalah wireless karena memberikan visibilitas penuh terhadap metrik koneksi penting seperti signal strength, TX/RX rate, dan uptime dari setiap perangkat yang terhubung ke jaringan wireless MikroTik.</p>
+        
+        <h3 class="subsection-title">Mengakses Registration Table melalui Winbox</h3>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Langkah-langkah mengakses Registration Table melalui Winbox:</div>
+            <div class="code-line">1. Buka aplikasi Winbox dan login ke router MikroTik</div>
+            <div class="code-line">2. Pada menu sebelah kiri, pilih <span class="keyword">Wireless</span></div>
+            <div class="code-line">3. Pilih tab <span class="keyword">Registration Table</span></div>
+            <div class="code-line">4. Akan muncul daftar klien yang terhubung beserta informasinya</div>
         </div>
-        <div class="info-item">
-            <span class="info-label">Sekolah:</span>
-            <span class="info-value">Dwija Bhakti 01 Jombang</span>
+        
+        <div class="image-container">
+            <img src="winbox-registration.png" alt="Mengakses Registration Table via Winbox">
+            <div class="image-caption">Langkah-langkah mengakses Registration Table melalui interface Winbox.</div>
+        </div>
+
+        <h3 class="subsection-title">Mengakses Registration Table melalui CLI</h3>
+        
+        <p>Dari sumber MikroTik Forum (2023), akses melalui Command Line Interface (CLI) memberikan fleksibilitas lebih dalam memantau dan memfilter informasi pada registration table, terutama untuk otomatisasi dan scripting.</p>
+        
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print</span></div>
+            <div class="code-line comment"># Menampilkan seluruh informasi dari registration table</div>
+            <div class="code-line"># INTERFACE    MAC-ADDRESS       AP   SIGNAL-STRENGTH...</div>
+            <div class="code-line">0 wlan1      AC:84:C6:XX:XX:XX  no   -56dBm@1Mbps     65.2... 2h14m52s</div>
+            <div class="code-line">1 wlan1      7C:8B:CA:XX:XX:XX  no   -63dBm@HT20-7    72.2... 14m21s</div>
+        </div>
+        
+        <p>Untuk menampilkan informasi lebih detail, gunakan perintah berikut:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print detail</span></div>
+            <div class="code-line comment"># Menampilkan seluruh informasi detail dari registration table</div>
+            <div class="code-line">Flags: X - disabled</div>
+            <div class="code-line">0    interface=wlan1 mac-address=AC:84:C6:XX:XX:XX ap=no wds=no bridge=no</div>
+            <div class="code-line">     rx-rate=54Mbps-20MHz/1S tx-rate=54Mbps-20MHz/1S packets=142632,117120</div>
+            <div class="code-line">     bytes=173417940,12737309 frames=142632,117120 frame-bytes=172564476,12034589</div>
+            <div class="code-line">     hw-frames=185278,121194 hw-frame-bytes=221382131,15050812</div>
+            <div class="code-line">     tx-frames-timed-out=0 uptime=2h14m52s last-activity=810ms</div>
+            <div class="code-line">     signal-strength=-56dBm@1Mbps signal-to-noise=33 signal-strength-ch0=-57</div>
+            <div class="code-line">     signal-strength-ch1=-66 strength-at-rates=-56@1Mbps 6s300ms,-56@2Mbps...</div>
+        </div>
+
+        <div class="conclusion-box">
+            <strong>Kesimpulan Bagian Registration Table:</strong> Dari 2 pendapat tersebut dapat disimpulkan bahwa Wireless Registration Table merupakan fitur esensial dalam MikroTik RouterOS yang memungkinkan administrator untuk memantau secara komprehensif status koneksi wireless, baik melalui interface Winbox yang user-friendly maupun melalui CLI yang lebih fleksibel untuk otomatisasi.
         </div>
     </div>
-</div>
 
-    <div class="image-container">
-        <img src="no.png" alt="Tampilan Registration Table di Winbox">
-        <div class="image-caption">Tampilan Registration Table di Winbox</div>
-    </div>
+    <!-- Section: Monitoring Signal Strength -->
+    <div class="section fade-in">
+        <h2 class="section-title">2. MONITORING KEKUATAN SINYAL (SIGNAL STRENGTH)</h2>
 
-    <h3 class="subsection-title">Ringkasan</h3>
-    <p>Dari sumber MikroTik Wiki (2024), registration-table adalah fitur RouterOS yang menampilkan daftar klien yang terasosiasi ke interface wireless MikroTik. Fitur ini menyediakan informasi penting seperti MAC address, tx-rate, rx-rate, signal-strength, uptime, dan last-activity untuk setiap klien yang terhubung.</p>
-    
-    <p>Dari sumber Manual RouterOS (2024), registration-table juga menyediakan statistik detail seperti jumlah paket, bytes, framing, nilai signal minimum/rata-rata/maksimum yang berguna untuk troubleshooting saat menggunakan mode Access Point.</p>
+        <div class="image-container">
+            <img src="signal-strength.png" alt="Monitoring Signal Strength pada MikroTik">
+            <div class="image-caption">Visualisasi kekuatan sinyal pada perangkat wireless yang terhubung ke MikroTik.</div>
+        </div>
 
-    <h3 class="subsection-title">Cara Akses Registration Table di Winbox</h3>
-    <div class="tech-alert">
-        <p><strong>Langkah-langkah mengakses Registration Table:</strong></p>
-        <p>1. Buka aplikasi Winbox dan hubungkan ke router MikroTik Anda</p>
-        <p>2. Di panel kiri, klik menu <strong>Wireless</strong></p>
-        <p>3. Pilih tab <strong>Registration</strong></p>
-        <p>4. Sekarang Anda dapat melihat semua klien wireless yang terhubung</p>
-        <p>5. Untuk melihat statistik lebih detail, klik tombol <strong>Stats</strong> yang terletak di bagian atas tabel</p>
-    </div>
-
-    <div class="tech-alert">
-        <p><strong>Melihat detail klien tertentu:</strong></p>
-        <p>1. Di tab <strong>Registration</strong>, double-klik pada klien yang ingin dilihat detailnya</p>
-        <p>2. Jendela baru akan terbuka menampilkan informasi lengkap tentang klien tersebut</p>
-        <p>3. Untuk memfilter klien berdasarkan interface tertentu, gunakan dropdown filter di bagian atas tabel dan pilih interface yang diinginkan</p>
-    </div>
-
-    <h3 class="subsection-title">Interpretasi Informasi</h3>
-    <p>Dari sumber MTCNA Study Guide (2023), nilai signal-strength (dBm) adalah parameter penting yang ditampilkan di registration-table. Semakin mendekati 0 nilai dBm, semakin kuat sinyal tersebut. Umumnya, sinyal -50 dBm dianggap sangat baik, -60 dBm baik, -70 dBm cukup, dan di bawah -80 dBm dianggap lemah.</p>
-    
-    <p>Dari sumber RouterOS Manual (2024), field uptime dan last-activity di registration-table sangat berguna untuk mendeteksi apakah klien sering terputus lalu tersambung kembali. Jika last-activity kecil tapi tidak ada trafik, bisa jadi ada "ghost client" yang hanya mengirim keepalive frames.</p>
-
-    <div class="tech-alert">
-        <p><strong>Informasi yang tersedia di Registration Table:</strong></p>
-        <p>• <strong>MAC Address</strong> - Alamat hardware dari perangkat klien</p>
-        <p>• <strong>Interface</strong> - Interface wireless yang terhubung dengan klien</p>
-        <p>• <strong>Signal Strength</strong> - Kekuatan sinyal dalam dBm</p>
-        <p>• <strong>TX/RX Rate</strong> - Kecepatan transmit/receive data</p>
-        <p>• <strong>CCQ</strong> - Client Connection Quality (persentase kualitas koneksi)</p>
-        <p>• <strong>Uptime</strong> - Berapa lama klien telah terhubung</p>
-        <p>• <strong>Last Activity</strong> - Waktu sejak aktivitas terakhir klien</p>
-    </div>
-
-    <div class="conclusion-box">
-        <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa registration-table adalah alat monitoring paling dasar dan penting untuk melihat siapa yang terhubung ke interface wireless MikroTik dan metrik kunci (signal, rate, uptime) yang membantu diagnosa awal konektivitas wireless.</p>
-    </div>
-</div>
-
-<!-- Subtopik 2: Memantau Sinyal, RSSI, dan SNR -->
-<div class="section fade-in">
-    <h2 class="section-title">2. MEMANTAU SINYAL (RSSI), NOISE, DAN SNR</h2>
-
-    <h3 class="subsection-title">Ringkasan</h3>
-    <p>Dari sumber MikroTik Wiki (2024), RouterOS menyediakan field signal-strength dan signal-to-noise (SNR) di registration-table dan di beberapa menu monitor untuk menilai kualitas radio link. Nilai sinyal biasanya disajikan dalam dBm dan menjadi indikator utama kualitas koneksi.</p>
-    
-    <p>Dari sumber Manual MTCNA (2024), interpretasi praktis untuk nilai RSSI adalah: -30 sampai -50 dBm = sangat baik; -60 sampai -70 dBm = fair; kurang dari -80 dBm = lemah dan rawan disconnect. SNR yang tinggi (>20 dB) umumnya menandakan link yang bersih dari interferensi.</p>
-
-    <h3 class="subsection-title">Monitoring Sinyal via Winbox</h3>
-    <div class="tech-alert">
-        <p><strong>Cara melihat kekuatan sinyal (RSSI) di Winbox:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Wireless</strong></p>
-        <p>2. Pilih tab <strong>Registration</strong></p>
-        <p>3. Lihat kolom <strong>Signal Strength</strong> untuk setiap klien</p>
-        <p>4. Untuk melihat statistik lengkap, klik tombol <strong>Stats</strong> di bagian atas tabel</p>
-    </div>
-
-    <div class="tech-alert">
-        <p><strong>Cara memonitor interface wireless secara real-time:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Wireless</strong></p>
-        <p>2. Pilih tab <strong>Interfaces</strong></p>
-        <p>3. Klik kanan pada interface wireless yang ingin dimonitor</p>
-        <p>4. Pilih <strong>Monitor</strong> dari menu dropdown</p>
-        <p>5. Jendela monitor akan terbuka menampilkan informasi real-time tentang interface tersebut</p>
-        <p>6. Perhatikan nilai <strong>Signal Strength</strong> dan <strong>Noise Floor</strong></p>
-        <p>7. Untuk refresh manual, klik tombol <strong>Refresh</strong></p>
-    </div>
-
-    <h3 class="subsection-title">Menganalisis Kualitas Sinyal</h3>
-    <p>Dari sumber MikroTik Wireless Troubleshooting (2023), jika registration-table menunjukkan signal-strength -85 dBm dan CCQ rendah, beberapa solusi yang mungkin dilakukan adalah: turunkan jarak, periksa kondisi antena/line-of-sight, atau ubah channel/frekuensi untuk menghindari interferensi.</p>
-    
-    <p>Dari sumber RouterOS Training Materials (2024), menu monitor sangat berguna saat physically aligning antena karena memberikan angka real-time dari sinyal dan noise. Ini memungkinkan teknisi untuk menyesuaikan posisi antena sambil melihat perubahan nilai secara langsung.</p>
-
-    <div class="tech-alert">
-        <p><strong>Informasi yang tersedia di jendela Monitor:</strong></p>
-        <p>• <strong>Status</strong> - Status operasional interface (running/stopped)</p>
-        <p>• <strong>Band</strong> - Band frekuensi yang digunakan (2ghz/5ghz)</p>
-        <p>• <strong>Frequency</strong> - Frekuensi operasi dalam MHz</p>
-        <p>• <strong>Channel Width</strong> - Lebar channel yang digunakan</p>
-        <p>• <strong>Noise Floor</strong> - Level noise background dalam dBm</p>
-        <p>• <strong>Overall TX CCQ</strong> - Kualitas koneksi transmit keseluruhan</p>
-        <p>• <strong>Registered Clients</strong> - Jumlah klien yang terhubung</p>
-    </div>
-
-    <div class="tech-alert">
-        <p>Signal-to-Noise Ratio (SNR) dihitung dari perbedaan antara kekuatan sinyal (RSSI) dan noise floor. Misalnya, jika RSSI = -60 dBm dan noise floor = -90 dBm, maka SNR = 30 dB, yang dianggap sangat baik.</p>
-    </div>
-
-    <div class="conclusion-box">
-        <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa pengukuran RSSI, noise, dan SNR melalui registration-table dan fitur monitor adalah langkah wajib untuk menilai kualitas link wireless dan menentukan tindakan perbaikan seperti alignment, pemilihan channel, atau pengaturan tx-power.</p>
-    </div>
-</div>
-
-<!-- Subtopik 3: CCQ, Tx/Rx Rate, dan Throughput -->
-<div class="section fade-in">
-    <h2 class="section-title">3. CCQ, TX/RX-RATE, DAN THROUGHPUT</h2>
-
-    <h3 class="subsection-title">Ringkasan</h3>
-    <p>Dari sumber MikroTik Wiki (2024), CCQ (Client Connection Quality) adalah metrik yang diperlihatkan pada RouterOS yang mengukur efisiensi layer 2 dari koneksi wireless. Nilai CCQ mendekati 100% menunjukkan koneksi yang efisien dengan sedikit retransmisi packet.</p>
-    
-    <p>Dari sumber RouterOS Manual (2024), tx-rate dan rx-rate (minimal/rata-rata/maksimal) ditampilkan di registration-table; perbedaan besar antara tx dan rx bisa menunjukkan masalah duplex, interferensi, atau ketidakcocokan data-rate yang dikonfigurasi.</p>
-
-    <h3 class="subsection-title">Memeriksa CCQ dan Rate via Winbox</h3>
-    <div class="tech-alert">
-        <p><strong>Cara melihat CCQ dan TX/RX Rate:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Wireless</strong></p>
-        <p>2. Pilih tab <strong>Registration</strong></p>
-        <p>3. Klik tombol <strong>Stats</strong> di bagian atas tabel</p>
-        <p>4. Perhatikan kolom <strong>CCQ</strong>, <strong>TX Rate</strong>, dan <strong>RX Rate</strong></p>
-        <p>5. Double-klik pada klien untuk melihat statistik lebih detail, termasuk nilai minimum, rata-rata, dan maksimum</p>
-    </div>
-
-    <div class="tech-alert">
-        <p><strong>Melakukan Bandwidth Test menggunakan Winbox:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Tools</strong></p>
-        <p>2. Pilih <strong>Bandwidth Test</strong></p>
-        <p>3. Pada jendela bandwidth test:</p>
-        <p>&nbsp;&nbsp;• Di field <strong>Address</strong>: Masukkan alamat IP klien/peer yang akan diuji</p>
-        <p>&nbsp;&nbsp;• Pilih <strong>Direction</strong>: both, tx, atau rx</p>
-        <p>&nbsp;&nbsp;• Jika diperlukan, masukkan kredensial di field <strong>User</strong> dan <strong>Password</strong></p>
-        <p>&nbsp;&nbsp;• Atur <strong>Duration</strong> sesuai kebutuhan</p>
-        <p>4. Klik tombol <strong>Start</strong> untuk memulai pengujian</p>
-        <p>5. Hasil throughput akan ditampilkan secara real-time</p>
-    </div>
-
-    <h3 class="subsection-title">Interpretasi & Tindakan</h3>
-    <p>Dari sumber MikroTik Wireless Troubleshooting (2023), CCQ rendah yang disertai penurunan tx-rate biasanya mengindikasikan masalah seperti interferensi, jarak terlalu jauh, antena tidak sejajar, atau masalah driver/firmware pada perangkat klien.</p>
-    
-    <p>Dari sumber Wireless Network Best Practices (2024), membandingkan tx-rate dan rx-rate dapat memberikan indikasi arah masalah (dari AP ke client atau sebaliknya). Pengujian bandwidth dengan tool seperti bandwidth-test penting untuk verifikasi performa end-to-end.</p>
-
-    <div class="tech-alert">
-        <p><strong>Hasil Bandwidth Test menampilkan informasi:</strong></p>
-        <p>• <strong>Status</strong> - Status pengujian (running/done)</p>
-        <p>• <strong>Direction</strong> - Arah pengujian (tx/rx/both)</p>
-        <p>• <strong>TX/RX Total Packets</strong> - Jumlah paket yang dikirim/diterima</p>
-        <p>• <strong>TX/RX Throughput</strong> - Throughput transmit/receive dalam Mbps</p>
-        <p>• <strong>TX/RX Total Bytes</strong> - Total byte yang dikirim/diterima</p>
-        <p>• <strong>Test Duration</strong> - Durasi pengujian</p>
-    </div>
-
-    <div class="security-alert">
-        <p>Perhatikan bahwa penggunaan Bandwidth Test dapat membebani jaringan dan perangkat secara signifikan. Jangan melakukan pengujian saat jaringan sedang digunakan untuk aktivitas penting.</p>
-    </div>
-
-    <div class="conclusion-box">
-        <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa monitoring CCQ dan tx/rx-rate melalui registration-table, ditambah pengujian throughput dengan Bandwidth Test, diperlukan untuk memvalidasi performa link wireless secara menyeluruh.</p>
-    </div>
-</div>
-
-<!-- Subtopik 4: Monitoring Real-time & Alat Diagnostik -->
-<div class="section fade-in">
-    <h2 class="section-title">4. MONITORING REAL-TIME & ALAT DIAGNOSTIK</h2>
-
-    <h3 class="subsection-title">Ringkasan</h3>
-    <p>Dari sumber MikroTik Wiki (2024), RouterOS menyertakan beberapa alat monitoring real-time seperti Torch, Packet Sniffer, dan fitur wireless monitor untuk pemantauan trafik, capture paket, dan pengukuran sinyal saat alignment.</p>
-    
-    <p>Dari sumber Network Troubleshooting Best Practices (2023), pendekatan sistematis yang mengkombinasikan log, torch, packet capture, dan pemeriksaan ARP/route biasanya paling efektif dalam menemukan akar masalah konektivitas wireless.</p>
-
-    <h3 class="subsection-title">Alat Real-time Monitoring di Winbox</h3>
-    <div class="tech-alert">
-        <p><strong>Menggunakan Torch (Traffic Monitor):</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Tools</strong></p>
-        <p>2. Pilih <strong>Torch</strong></p>
-        <p>3. Pada jendela Torch:</p>
-        <p>&nbsp;&nbsp;• <strong>Interface</strong>: Pilih interface wireless dari dropdown</p>
-        <p>&nbsp;&nbsp;• <strong>Src. Address</strong>: Opsional, masukkan alamat IP sumber untuk memfilter</p>
-        <p>&nbsp;&nbsp;• <strong>Dst. Address</strong>: Opsional, masukkan alamat IP tujuan untuk memfilter</p>
-        <p>&nbsp;&nbsp;• Atur <strong>Protocol</strong>, <strong>Port</strong>, dll sesuai kebutuhan</p>
-        <p>4. Klik <strong>Start</strong> untuk memulai monitoring</p>
-        <p>5. Trafik real-time akan ditampilkan dengan detail protokol, port, dan throughput</p>
-    </div>
-
-    <div class="tech-alert">
-        <p><strong>Menggunakan Packet Sniffer:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Tools</strong></p>
-        <p>2. Pilih <strong>Packet Sniffer</strong></p>
-        <p>3. Pada tab <strong>Filter</strong>:</p>
-        <p>&nbsp;&nbsp;• <strong>Interface</strong>: Pilih interface wireless dari dropdown</p>
-        <p>&nbsp;&nbsp;• <strong>IP Protocol</strong>: Pilih protokol yang ingin dipantau (opsional)</p>
-        <p>&nbsp;&nbsp;• <strong>Src. Address</strong>: Masukkan alamat IP sumber (opsional)</p>
-        <p>&nbsp;&nbsp;• <strong>Dst. Address</strong>: Masukkan alamat IP tujuan (opsional)</p>
-        <p>4. Pada tab <strong>Streaming</strong>, centang <strong>Streaming Enabled</strong> jika ingin mengirim ke Wireshark</p>
-        <p>5. Klik <strong>Start</strong> untuk memulai packet capture</p>
-        <p>6. Klik <strong>Stop</strong> untuk menghentikan dan <strong>Save</strong> untuk menyimpan hasil capture</p>
-    </div>
-
-    <div class="tech-alert">
-        <p><strong>Monitoring Interface Wireless:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>Wireless</strong></p>
-        <p>2. Pilih tab <strong>Interfaces</strong></p>
-        <p>3. Klik kanan pada interface wireless</p>
-        <p>4. Pilih <strong>Monitor</strong> dari menu dropdown</p>
-        <p>5. Jendela monitor akan menampilkan parameter radio real-time</p>
-        <p>6. Klik <strong>Refresh</strong> untuk update manual</p>
-    </div>
-
-    <h3 class="subsection-title">Log dan Alarm</h3>
-    <p>Dari sumber RouterOS Manual (2024), memeriksa log dengan filter topik terkait sangat berguna untuk menemukan pesan-pesan seperti "link down", "authentication failure", atau "gateway unreachable" yang membantu identifikasi masalah.</p>
-    
-    <p>Dari sumber MTCNA Study Guide (2023), mengkombinasikan log dengan monitoring real-time memudahkan korelasi antara event (misalnya disconnect) dengan perubahan pada parameter radio (sinyal, CCQ, dsb.) untuk mempersempit kemungkinan penyebab masalah.</p>
-
-    <div class="tech-alert">
-        <p><strong>Melihat Log di Winbox:</strong></p>
-        <p>1. Di Winbox, navigasi ke menu <strong>System</strong></p>
-        <p>2. Pilih <strong>Log</strong></p>
-        <p>3. Untuk memfilter log:</p>
-        <p>&nbsp;&nbsp;• Klik tombol <strong>Filter</strong> di bagian atas</p>
-        <p>&nbsp;&nbsp;• Di field <strong>Topics</strong>: Ketik "wireless" atau "error" atau "auth"</p>
-        <p>&nbsp;&nbsp;• Klik <strong>Apply</strong></p>
-        <p>4. Log yang relevan akan ditampilkan dengan timestamp</p>
-        <p>5. Perhatikan pesan error atau event yang berkaitan dengan wireless</p>
-    </div>
-
-    <div class="tech-alert">
-        <p>Menggunakan kombinasi Registration Table, Torch, dan Log dapat membantu mengidentifikasi masalah seperti klien yang sering disconnect/reconnect, masalah autentikasi, atau masalah throughput rendah yang tidak terdeteksi pada metrik sederhana.</p>
-    </div>
-
-    <div class="conclusion-box">
-        <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa kombinasi alat real-time RouterOS (Torch, Packet Sniffer, Monitor) ditambah pemeriksaan log memberikan kemampuan diagnosa yang kuat untuk masalah performa dan konektivitas wireless.</p>
-    </div>
-</div>
-
-<!-- Subtopik 5: Troubleshooting Praktis (indikator & solusi cepat) -->
-<div class="section fade-in">
-    <h2 class="section-title">5. TROUBLESHOOTING PRAKTIS BERDASARKAN INDIKATOR</h2>
-
-    <h3 class="subsection-title">Ringkasan</h3>
-    <p>Dari sumber MikroTik Troubleshooting Guide (2024), beberapa penyebab umum gangguan wireless termasuk: interferensi channel, antena atau konektor rusak, konfigurasi mode/rate yang tidak kompatibel, dan aturan firewall/NAT yang keliru.</p>
-    
-    <p>Dari sumber Network Troubleshooting Best Practices (2023), langkah sistematis untuk troubleshooting (cek fisik → cek registration-table/ARP → cek sinyal/CCQ → tool torch/sniffer → periksa log) direkomendasikan agar proses pemecahan masalah lebih efisien.</p>
-
-    <h3 class="subsection-title">Checklist Perbaikan Cepat dengan Winbox</h3>
-    <div class="tech-alert">
-        <p><strong>Langkah Troubleshooting di Winbox:</strong></p>
-        <p>1) Di menu <strong>Interfaces</strong>, periksa apakah interface wireless terlihat <strong>Running</strong> (tanda R)</p>
-        <p>2) Di menu <strong>IP</strong> → <strong>ARP</strong>, pastikan MAC address gateway/klien terlihat</p>
-        <p>3) Di menu <strong>Wireless</strong> → <strong>Registration</strong> → <strong>Stats</strong>, cek signal, CCQ, dan rate</p>
-        <p>4) Di menu <strong>Tools</strong> → <strong>Torch</strong>, pilih interface wireless dan lihat trafik real-time</p>
-        <p>5) Di menu <strong>System</strong> → <strong>Log</strong>, filter untuk "wireless", "error", atau "auth" dan periksa pesan error</p>
-    </div>
-
-    <h3 class="subsection-title">Contoh Kasus & Solusi via Winbox</h3>
-    <p>Dari sumber MikroTik Wiki (2024), jika klien sering terputus dengan signal -85 dBm, beberapa solusi yang bisa dicoba: ubah posisi antena, naikkan tx-power secara moderat, atau pindahkan ke channel yang kurang padat/interferensi.</p>
-    
-    <p>Dari sumber Wireless Network Best Practices (2024), ketika CCQ rendah tapi RSSI bagus, biasanya masalahnya adalah interferensi. Periksa dengan frequency scan dan coba ubah channel-width atau gunakan mode legacy yang lebih kompatibel.</p>
-
-    <div class="tech-alert">
-        <p><strong>Melakukan Frequency Monitor dan Scan di Winbox:</strong></p>
-        <p>1. Di menu <strong>Wireless</strong>, pilih tab <strong>Interfaces</strong></p>
-        <p>2. Klik kanan pada interface wireless</p>
-        <p>3. Pilih <strong>Scanner</strong> dari menu dropdown</p>
-        <p>4. Klik <strong>Start</strong> untuk melihat AP tetangga dan penggunaan channel</p>
-        <p>5. Untuk RouterOS v7+, gunakan <strong>Frequency Monitor</strong> yang bisa diakses dengan:</p>
-        <p>&nbsp;&nbsp;• Di menu <strong>Wireless</strong>, pilih tab <strong>Frequency Usage</strong></p>
-        <p>&nbsp;&nbsp;• Pilih interface dan klik <strong>Start</strong> untuk melihat gangguan spektrum</p>
-    </div>
-
-    <div class="tech-alert">
-        <p><strong>Mengubah Channel dan Konfigurasi Wireless di Winbox:</strong></p>
-        <p>1. Di menu <strong>Wireless</strong>, pilih tab <strong>Interfaces</strong></p>
-        <p>2. Double-klik interface wireless yang ingin dikonfigurasi</p>
-        <p>3. Pada tab <strong>Wireless</strong>:</p>
-        <p>&nbsp;&nbsp;• <strong>Channel Width</strong>: Ubah ke "20MHz" atau "20/40MHz-Ce" untuk mengurangi interferensi</p>
-        <p>&nbsp;&nbsp;• <strong>Frequency</strong>: Pilih channel yang kurang padat berdasarkan hasil scan</p>
-        <p>&nbsp;&nbsp;• <strong>TX Power</strong>: Sesuaikan secara moderat jika sinyal lemah (jangan terlalu tinggi)</p>
-        <p>4. Klik <strong>OK</strong> untuk menyimpan perubahan</p>
-    </div>
-
-    <div class="security-alert">
-        <p>Jangan meningkatkan tx-power melebihi batas legal di wilayah Anda. Power yang terlalu tinggi tidak selalu meningkatkan performa, bahkan bisa memperburuk interferensi dan mengurangi battery life perangkat mobile.</p>
-    </div>
-
-    <div class="conclusion-box">
-        <p>Dari 2/3 pendapat tersebut dapat disimpulkan bahwa troubleshooting wireless yang efektif mengikuti alur logis (fisik → layer2 → layer3 → monitoring real-time) dan memanfaatkan fitur Winbox untuk mengidentifikasi dan mengatasi masalah.</p>
-    </div>
-</div>
-
-<!-- Bibliography -->
-<div class="bibliography">
-    <h3>DAFTAR PUSTAKA</h3>
-    <ul>
-        <li><strong>MikroTik Wiki.</strong> 2024. <em>Manual: Interface/Wireless</em>. <a href="https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless" target="_blank">https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless</a>. Diakses pada 13 September 2025, pukul 07:15 sampai 07:45 WIB.</li>
+        <h3 class="subsection-title">Memahami Signal Strength</h3>
         
-        <li><strong>RouterOS Manual.</strong> 2024. <em>Registration Table / Wireless Monitoring</em>. <a href="https://help.mikrotik.com/docs/display/ROS/Wireless" target="_blank">https://help.mikrotik.com/docs/display/ROS/Wireless</a>. Diakses pada 13 September 2025, pukul 08:00 sampai 08:30 WIB.</li>
+        <p>Dari sumber MikroTik Troubleshooting Guide (2024), <strong>Signal Strength</strong> adalah pengukuran kekuatan sinyal wireless yang diterima (dalam dBm) dan merupakan indikator penting untuk mengevaluasi kualitas koneksi wireless. Nilai ini selalu negatif, dan semakin mendekati nol (misalnya -40 dBm), semakin baik kualitas sinyal. MikroTik menggunakan rata-rata tertimbang eksponensial dengan faktor penghalusan 50% untuk mengukur tingkat sinyal.</p>
         
-        <li><strong>MTCNA Study Guide.</strong> 2023. <em>Wireless Registration Table & Signal Interpretation</em>. <a href="https://training.mikrotik.com/docs" target="_blank">https://training.mikrotik.com/docs</a>. Diakses pada 13 September 2025, pukul 09:00 sampai 09:25 WIB.</li>
+        <p>Dari sumber Networking Best Practices (2023), standar umum untuk interpretasi signal strength adalah:</p>
         
-        <li><strong>MikroTik Wireless Troubleshooting.</strong> 2023. <em>Common Wireless Issues & Solutions</em>. <a href="https://help.mikrotik.com/docs/display/ROS/Wireless+Troubleshooting" target="_blank">https://help.mikrotik.com/docs/display/ROS/Wireless+Troubleshooting</a>. Diakses pada 13 September 2025, pukul 10:00 sampai 10:35 WIB.</li>
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">-30 dBm hingga -50 dBm</span>: Sinyal sangat kuat (excellent)</div>
+            <div class="code-line"><span class="keyword">-50 dBm hingga -60 dBm</span>: Sinyal kuat (good)</div>
+            <div class="code-line"><span class="keyword">-60 dBm hingga -70 dBm</span>: Sinyal cukup baik (fair)</div>
+            <div class="code-line"><span class="keyword">-70 dBm hingga -80 dBm</span>: Sinyal lemah (poor)</div>
+            <div class="code-line"><span class="keyword">Kurang dari -80 dBm</span>: Sinyal sangat lemah, koneksi tidak stabil</div>
+        </div>
+
+        <h3 class="subsection-title">Memonitor Signal Strength melalui CLI</h3>
         
-        <li><strong>RouterOS Training Materials.</strong> 2024. <em>Wireless Signal & Performance Monitoring</em>. <a href="https://mum.mikrotik.com/presentations" target="_blank">https://mum.mikrotik.com/presentations</a>. Diakses pada 13 September 2025, pukul 11:15 sampai 11:40 WIB.</li>
+        <p>Dari sumber MikroTik Forum (2022), untuk memeriksa kekuatan sinyal dari klien tertentu menggunakan CLI, Anda dapat menggunakan perintah berikut:</p>
         
-        <li><strong>Network Troubleshooting Best Practices.</strong> 2023. <em>Systematic Approach to Wireless Issues</em>. <a href="https://www.networkcomputing.com/wireless" target="_blank">https://www.networkcomputing.com/wireless</a>. Diakses pada 13 September 2025, pukul 12:30 sampai 13:00 WIB.</li>
+        <div class="code-terminal">
+            <div class="code-line comment"># Memeriksa signal strength untuk semua klien</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print</span></div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Memeriksa signal strength untuk klien tertentu (berdasarkan indeks)</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get value-name=signal-strength 0</span></div>
+            <div class="code-line">-56dBm@1Mbps</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Memeriksa signal strength untuk klien dengan MAC address tertentu</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get [find where mac-address=AC:84:C6:XX:XX:XX] value-name=signal-strength</span></div>
+            <div class="code-line">-56dBm@1Mbps</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Menampilkan hanya kolom signal-strength untuk semua klien</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print =.proplist=signal-strength</span></div>
+            <div class="code-line">signal-strength: -56dBm@1Mbps</div>
+            <div class="code-line">signal-strength: -63dBm@HT20-7</div>
+        </div>
+
+        <h3 class="subsection-title">Memonitor Signal Strength dengan Script</h3>
         
-        <li><strong>Wireless Network Best Practices.</strong> 2024. <em>Optimizing MikroTik Wireless Networks</em>. <a href="https://forum.mikrotik.com/viewforum.php?f=2" target="_blank">https://forum.mikrotik.com/viewforum.php?f=2</a>. Diakses pada 13 September 2025, pukul 14:20 sampai 14:45 WIB.</li>
+        <p>Dari sumber MikroTik Script Repository (2023), untuk monitoring berkelanjutan dan pembuatan log, Anda dapat menggunakan script berikut:</p>
         
-        <li><strong>MikroTik Troubleshooting Guide.</strong> 2024. <em>Wireless Connectivity Troubleshooting</em>. <a href="https://help.mikrotik.com/docs/display/ROS/Troubleshooting" target="_blank">https://help.mikrotik.com/docs/display/ROS/Troubleshooting</a>. Diakses pada 13 September 2025, pukul 15:30 sampai 16:00 WIB.</li>
-    </ul>
+        <div class="code-terminal">
+            <div class="code-line comment"># Script untuk mencatat signal strength dan memutuskan klien dengan sinyal lemah</div>
+            <div class="code-line"><span class="string"># WiFi monitor script</span></div>
+            <div class="code-line"></div>
+            <div class="code-line"><span class="keyword">:local minUptime "15s"</span> <span class="comment"># Waktu minimum koneksi</span></div>
+            <div class="code-line"><span class="keyword">:local minSignalStrength -70</span> <span class="comment"># Batas minimum kekuatan sinyal</span></div>
+            <div class="code-line"></div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="keyword">:foreach i in=[find ap=no] do={</span></div>
+            <div class="code-line">    <span class="keyword">:local signal</span></div>
+            <div class="code-line">    <span class="keyword">:set signal [get $i signal-strength]</span></div>
+            <div class="code-line">    <span class="keyword">:set signal [:pick $signal 0 [:find $signal "dBm"]]</span></div>
+            <div class="code-line">    <span class="keyword">:if ([get $i uptime] > $minUptime && $signal < $minSignalStrength) do={</span></div>
+            <div class="code-line">        <span class="keyword">:log warning ([get $i mac-address] . " was disconnected due to low signal: " . [get $i signal-strength])</span></div>
+            <div class="code-line">        <span class="keyword">/interface wireless registration-table remove $i</span></div>
+            <div class="code-line">        <span class="keyword">:delay 5s</span></div>
+            <div class="code-line">    <span class="keyword">}</span></div>
+            <div class="code-line"><span class="keyword">}</span></div>
+        </div>
+        
+        <p>Script ini dapat dijadwalkan untuk berjalan secara berkala menggunakan Scheduler:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/system scheduler add name="Wireless Signal Monitor" interval=5m on-event=</span></div>
+            <div class="code-line"><span class="string">"/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="string">:foreach i in=[find ap=no] do={</span></div>
+            <div class="code-line"><span class="string">    :local signal</span></div>
+            <div class="code-line"><span class="string">    :set signal [get $i signal-strength]</span></div>
+            <div class="code-line"><span class="string">    :set signal [:pick $signal 0 [:find $signal \"dBm\"]]</span></div>
+            <div class="code-line"><span class="string">    :if ([get $i uptime] > \"15s\" && $signal < -70) do={</span></div>
+            <div class="code-line"><span class="string">        :log warning ([get $i mac-address] . \" has low signal: \" . [get $i signal-strength])</span></div>
+            <div class="code-line"><span class="string">    }</span></div>
+            <div class="code-line"><span class="string">}"</span></div>
+        </div>
+
+        <div class="tech-alert">
+            <p>Perhatikan bahwa nilai signal strength pada MikroTik selalu disertai dengan rate data (misalnya "-56dBm@1Mbps"). Untuk keperluan perhitungan atau perbandingan, script harus memisahkan nilai dBm dari rate data tersebut menggunakan fungsi pick dan find.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <strong>Kesimpulan Bagian Signal Strength:</strong> Dari 2 pendapat tersebut dapat disimpulkan bahwa monitoring signal strength merupakan aspek krusial dalam mengelola jaringan wireless MikroTik. Nilai ideal untuk koneksi stabil adalah -30 dBm hingga -70 dBm, dan dapat dipantau secara efektif melalui CLI, Winbox, atau menggunakan script terjadwal untuk manajemen otomatis.
+        </div>
+    </div>
+
+    <!-- Section: Monitoring Connection Quality (CCQ) -->
+    <div class="section fade-in">
+        <h2 class="section-title">3. MONITORING KUALITAS KONEKSI (CCQ)</h2>
+
+        <div class="image-container">
+            <img src="ccq-monitoring.png" alt="Monitoring CCQ pada MikroTik">
+            <div class="image-caption">Monitoring Client Connection Quality (CCQ) pada perangkat MikroTik.</div>
+        </div>
+
+        <h3 class="subsection-title">Pengertian CCQ (Client Connection Quality)</h3>
+        
+        <p>Dari sumber MikroTik Wiki (2023), CCQ (Client Connection Quality) adalah metrik yang digunakan MikroTik untuk mengukur kualitas koneksi wireless antara access point dan klien. Nilai CCQ dihitung berdasarkan jumlah retransmisi paket dan efisiensi transfer data. Nilai CCQ dinyatakan dalam persentase (0-100%), di mana 100% menunjukkan koneksi yang sempurna tanpa retransmisi.</p>
+        
+        <p>Dari sumber Wireless Network Engineering (2023), CCQ merupakan indikator yang lebih komprehensif dibandingkan signal strength karena mempertimbangkan berbagai faktor yang mempengaruhi kualitas koneksi seperti interferensi, jarak, dan halangan fisik. Nilai CCQ di bawah 70% umumnya menandakan masalah pada koneksi wireless yang memerlukan investigasi lebih lanjut.</p>
+
+        <h3 class="subsection-title">Memonitor CCQ melalui Winbox</h3>
+        
+        <p>Untuk memonitor CCQ melalui Winbox, ikuti langkah-langkah berikut:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Langkah-langkah memonitor CCQ melalui Winbox:</div>
+            <div class="code-line">1. Buka aplikasi Winbox dan login ke router MikroTik</div>
+            <div class="code-line">2. Pada menu sebelah kiri, pilih <span class="keyword">Wireless</span></div>
+            <div class="code-line">3. Pilih tab <span class="keyword">Registration Table</span></div>
+            <div class="code-line">4. Kolom <span class="keyword">Tx/Rx CCQ</span> menunjukkan nilai CCQ untuk transmit dan receive</div>
+            <div class="code-line">5. Jika kolom ini tidak terlihat, klik kanan pada header tabel dan centang <span class="keyword">Tx/Rx CCQ</span></div>
+        </div>
+
+        <h3 class="subsection-title">Memonitor CCQ melalui CLI</h3>
+        
+        <p>Dari sumber MikroTik Forum (2022), untuk memeriksa nilai CCQ menggunakan CLI, gunakan perintah berikut:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Memeriksa CCQ untuk semua klien dengan menampilkan detail lengkap</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print detail</span></div>
+            <div class="code-line comment"># Output akan mencakup nilai tx-ccq dan rx-ccq</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Memeriksa CCQ untuk klien tertentu (berdasarkan indeks)</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get 0 tx-ccq</span></div>
+            <div class="code-line">72.2</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get 0 rx-ccq</span></div>
+            <div class="code-line">85.6</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Memeriksa CCQ untuk klien dengan MAC address tertentu</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get [find where mac-address=AC:84:C6:XX:XX:XX] tx-ccq</span></div>
+            <div class="code-line">72.2</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Menampilkan hanya informasi CCQ dari registration table</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print =.proplist=mac-address,tx-ccq,rx-ccq</span></div>
+            <div class="code-line">mac-address=AC:84:C6:XX:XX:XX tx-ccq=72.2 rx-ccq=85.6</div>
+            <div class="code-line">mac-address=7C:8B:CA:XX:XX:XX tx-ccq=65.7 rx-ccq=79.3</div>
+        </div>
+
+        <h3 class="subsection-title">Script Monitoring CCQ</h3>
+        
+        <p>Dari sumber MikroTik Script Collection (2023), berikut adalah script untuk memantau dan mencatat nilai CCQ klien wireless:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Script untuk monitoring dan logging nilai CCQ</div>
+            <div class="code-line"><span class="keyword">:local minimumCCQ 70</span> <span class="comment"># Batas minimum CCQ yang dapat diterima</span></div>
+            <div class="code-line"></div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="keyword">:foreach i in=[find] do={</span></div>
+            <div class="code-line">    <span class="keyword">:local txccq [get $i tx-ccq]</span></div>
+            <div class="code-line">    <span class="keyword">:local rxccq [get $i rx-ccq]</span></div>
+            <div class="code-line">    <span class="keyword">:local mac [get $i mac-address]</span></div>
+            <div class="code-line">    <span class="keyword">:local interface [get $i interface]</span></div>
+            <div class="code-line">    </div>
+            <div class="code-line">    <span class="keyword">:if ($txccq < $minimumCCQ || $rxccq < $minimumCCQ) do={</span></div>
+            <div class="code-line">        <span class="keyword">:log warning "Poor CCQ detected on $interface: Client $mac has Tx CCQ: $txccq%, Rx CCQ: $rxccq%"</span></div>
+            <div class="code-line">    <span class="keyword">}</span></div>
+            <div class="code-line"><span class="keyword">}</span></div>
+        </div>
+        
+        <p>Untuk menjadwalkan script ini agar berjalan secara otomatis:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/system scheduler add name="CCQ Monitor" interval=10m on-event=</span></div>
+            <div class="code-line"><span class="string">"/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="string">:foreach i in=[find] do={</span></div>
+            <div class="code-line"><span class="string">    :local txccq [get $i tx-ccq]</span></div>
+            <div class="code-line"><span class="string">    :local rxccq [get $i rx-ccq]</span></div>
+            <div class="code-line"><span class="string">    :local mac [get $i mac-address]</span></div>
+            <div class="code-line"><span class="string">    :local interface [get $i interface]</span></div>
+            <div class="code-line"><span class="string">    </span></div>
+            <div class="code-line"><span class="string">    :if ($txccq < 70 || $rxccq < 70) do={</span></div>
+            <div class="code-line"><span class="string">        :log warning \"Poor CCQ detected on $interface: Client $mac has Tx CCQ: $txccq%, Rx CCQ: $rxccq%\"</span></div>
+            <div class="code-line"><span class="string">    }</span></div>
+            <div class="code-line"><span class="string">}"</span></div>
+        </div>
+
+        <div class="security-alert">
+            <p>Nilai CCQ yang rendah secara konsisten (di bawah 60%) dapat mengindikasikan masalah serius seperti interferensi, jarak terlalu jauh, atau perangkat hardware yang bermasalah. Dalam lingkungan produksi, pastikan untuk mengatur notifikasi saat nilai CCQ turun di bawah ambang batas yang dapat diterima.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <strong>Kesimpulan Bagian CCQ:</strong> Dari 2 pendapat tersebut dapat disimpulkan bahwa Client Connection Quality (CCQ) merupakan metrik penting yang memberikan gambaran komprehensif tentang kualitas koneksi wireless. Monitoring CCQ secara teratur melalui CLI, Winbox, atau script otomatis sangat direkomendasikan untuk memastikan performa jaringan wireless yang optimal dengan nilai ideal di atas 70%.
+        </div>
+    </div>
+
+    <!-- Section: Monitoring TX/RX Rate -->
+    <div class="section fade-in">
+        <h2 class="section-title">4. MONITORING TX/RX RATE</h2>
+
+        <div class="image-container">
+            <img src="txrx-rate.png" alt="Monitoring TX/RX Rate pada MikroTik">
+            <div class="image-caption">Monitoring TX/RX Rate pada perangkat wireless MikroTik.</div>
+        </div>
+
+        <h3 class="subsection-title">Pengertian TX/RX Rate</h3>
+        
+        <p>Dari sumber MikroTik Forum (2023), TX/RX Rate mengacu pada kecepatan transfer data antara access point dan klien wireless. TX Rate (Transmit Rate) adalah kecepatan pengiriman data dari access point ke klien, sedangkan RX Rate (Receive Rate) adalah kecepatan penerimaan data dari klien ke access point. Kedua nilai ini diukur dalam Mbps (Megabit per detik) dan dapat bervariasi tergantung pada kualitas sinyal, jenis modulasi, dan kapabilitas perangkat.</p>
+        
+        <p>Dari sumber Wireless Network Design Guide (2022), TX/RX Rate secara signifikan memengaruhi throughput aktual jaringan wireless. Nilai rate yang rendah biasanya mengindikasikan sinyal yang lemah, interferensi, atau perangkat yang menggunakan standar wireless lama. Monitoring rate ini penting untuk mengidentifikasi perangkat yang mungkin memperlambat keseluruhan jaringan (fenomena yang dikenal sebagai "rate limiting client").</p>
+
+        <h3 class="subsection-title">Memonitor TX/RX Rate melalui Winbox</h3>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Langkah-langkah memonitor TX/RX Rate melalui Winbox:</div>
+            <div class="code-line">1. Buka aplikasi Winbox dan login ke router MikroTik</div>
+            <div class="code-line">2. Pada menu sebelah kiri, pilih <span class="keyword">Wireless</span></div>
+            <div class="code-line">3. Pilih tab <span class="keyword">Registration Table</span></div>
+            <div class="code-line">4. Kolom <span class="keyword">Tx Rate</span> dan <span class="keyword">Rx Rate</span> menampilkan nilai kecepatan transfer data</div>
+        </div>
+
+        <h3 class="subsection-title">Memonitor TX/RX Rate melalui CLI</h3>
+        
+        <p>Dari sumber RouterOS Manual (2024), untuk memeriksa TX/RX Rate menggunakan CLI, gunakan perintah berikut:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Melihat TX/RX Rate untuk semua klien</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print</span></div>
+            <div class="code-line comment"># Output mencakup kolom tx-rate dan rx-rate</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Melihat TX/RX Rate untuk klien tertentu (berdasarkan indeks)</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get 0 tx-rate</span></div>
+            <div class="code-line">54Mbps-20MHz/1S</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get 0 rx-rate</span></div>
+            <div class="code-line">54Mbps-20MHz/1S</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Melihat TX/RX Rate untuk klien dengan MAC address tertentu</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table get [find where mac-address=AC:84:C6:XX:XX:XX] tx-rate</span></div>
+            <div class="code-line">54Mbps-20MHz/1S</div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Menampilkan hanya informasi rate dari registration table</div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table print =.proplist=mac-address,tx-rate,rx-rate</span></div>
+            <div class="code-line">mac-address=AC:84:C6:XX:XX:XX tx-rate=54Mbps-20MHz/1S rx-rate=54Mbps-20MHz/1S</div>
+            <div class="code-line">mac-address=7C:8B:CA:XX:XX:XX tx-rate=26Mbps-20MHz/1S rx-rate=26Mbps-20MHz/1S</div>
+        </div>
+
+        <h3 class="subsection-title">Script Monitoring TX/RX Rate</h3>
+        
+        <p>Dari sumber MikroTik Script Collection (2023), berikut adalah script untuk memantau dan mendeteksi klien dengan rate rendah:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Script untuk mendeteksi klien dengan TX/RX Rate rendah</div>
+            <div class="code-line"><span class="keyword">:local minimumRate "24Mbps"</span> <span class="comment"># Batas minimum rate yang dapat diterima</span></div>
+            <div class="code-line"></div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="keyword">:foreach i in=[find] do={</span></div>
+            <div class="code-line">    <span class="keyword">:local txrate [get $i tx-rate]</span></div>
+            <div class="code-line">    <span class="keyword">:local rxrate [get $i rx-rate]</span></div>
+            <div class="code-line">    <span class="keyword">:local mac [get $i mac-address]</span></div>
+            <div class="code-line">    <span class="keyword">:local interface [get $i interface]</span></div>
+            <div class="code-line">    </div>
+            <div class="code-line">    <span class="keyword">:if ([:find $txrate $minimumRate] = 0) do={</span></div>
+            <div class="code-line">        <span class="keyword">:log warning "Low TX Rate detected: Client $mac on $interface has TX Rate: $txrate"</span></div>
+            <div class="code-line">    <span class="keyword">}</span></div>
+            <div class="code-line">    </div>
+            <div class="code-line">    <span class="keyword">:if ([:find $rxrate $minimumRate] = 0) do={</span></div>
+            <div class="code-line">        <span class="keyword">:log warning "Low RX Rate detected: Client $mac on $interface has RX Rate: $rxrate"</span></div>
+            <div class="code-line">    <span class="keyword">}</span></div>
+            <div class="code-line"><span class="keyword">}</span></div>
+        </div>
+        
+        <p>Untuk menjadwalkan monitoring rate secara otomatis:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/system scheduler add name="Rate Monitor" interval=15m on-event=</span></div>
+            <div class="code-line"><span class="string">"/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="string">:foreach i in=[find] do={</span></div>
+            <div class="code-line"><span class="string">    :local txrate [get $i tx-rate]</span></div>
+            <div class="code-line"><span class="string">    :local rxrate [get $i rx-rate]</span></div>
+            <div class="code-line"><span class="string">    :local mac [get $i mac-address]</span></div>
+            <div class="code-line"><span class="string">    :local interface [get $i interface]</span></div>
+            <div class="code-line"><span class="string">    </span></div>
+            <div class="code-line"><span class="string">    :if ([:find $txrate \"24Mbps\"] = 0) do={</span></div>
+            <div class="code-line"><span class="string">        :log warning \"Low TX Rate detected: Client $mac on $interface has TX Rate: $txrate\"</span></div>
+            <div class="code-line"><span class="string">    }</span></div>
+            <div class="code-line"><span class="string">}"</span></div>
+        </div>
+
+        <div class="tech-alert">
+            <p>Format TX/RX Rate pada MikroTik mencakup kecepatan data (Mbps), lebar kanal (20MHz/40MHz), dan jumlah spatial stream (/1S, /2S, dll). Misalnya, "54Mbps-20MHz/1S" berarti kecepatan 54 Mbps dengan lebar kanal 20MHz menggunakan 1 spatial stream. Untuk device 802.11n dan yang lebih baru, rate dapat mencapai ratusan Mbps dengan penggunaan multiple spatial streams dan lebar kanal yang lebih besar.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <strong>Kesimpulan Bagian TX/RX Rate:</strong> Dari 2 pendapat tersebut dapat disimpulkan bahwa TX/RX Rate merupakan parameter penting yang menunjukkan kecepatan transfer data antara access point dan klien. Monitoring TX/RX Rate secara teratur dapat membantu administrator mengidentifikasi perangkat dengan performa rendah yang mungkin memengaruhi keseluruhan kinerja jaringan wireless.
+        </div>
+    </div>
+
+    <!-- Section: Monitoring Overall Status -->
+    <div class="section fade-in">
+        <h2 class="section-title">5. MONITORING STATUS WIRELESS SECARA MENYELURUH</h2>
+
+        <div class="image-container">
+            <img src="overall-monitoring.png" alt="Monitoring Status Wireless Secara Menyeluruh pada MikroTik">
+            <div class="image-caption">Dashboard monitoring status wireless secara menyeluruh pada MikroTik RouterOS.</div>
+        </div>
+
+        <h3 class="subsection-title">Tools Monitoring Bawaan MikroTik</h3>
+        
+        <p>Dari sumber MikroTik Documentation (2024), selain registration table, MikroTik RouterOS menyediakan beberapa tools bawaan untuk monitoring status wireless secara menyeluruh, yang dapat membantu administrator dalam memahami kondisi jaringan secara real-time dan historical.</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Tools monitoring wireless pada MikroTik:</div>
+            <div class="code-line">1. <span class="keyword">Wireless Snooper</span>: Memantau penggunaan frekuensi sekitar dan menampilkan perangkat yang menempati setiap frekuensi</div>
+            <div class="code-line">2. <span class="keyword">Wireless Scanner</span>: Memindai dan menampilkan informasi tentang access point di sekitar</div>
+            <div class="code-line">3. <span class="keyword">Spectral Scan</span>: Memantau data spektral secara kontinu untuk menganalisis interferensi</div>
+            <div class="code-line">4. <span class="keyword">Torch</span>: Memonitor trafik secara real-time pada interface wireless</div>
+            <div class="code-line">5. <span class="keyword">Traffic Monitor</span>: Memantau throughput pada interface wireless</div>
+        </div>
+
+        <h3 class="subsection-title">Menggunakan Wireless Snooper</h3>
+        
+        <p>Dari sumber MikroTik Wiki (2023), Wireless Snooper adalah alat yang sangat berguna untuk memantau penggunaan frekuensi di sekitar dan mengidentifikasi potensial interferensi atau kepadatan kanal. Tool ini tersedia di CLI dan Winbox.</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Menggunakan Wireless Snooper melalui CLI</div>
+            <div class="code-line"><span class="keyword">/interface wireless snooper</span></div>
+            <div class="code-line comment"># Atau untuk interface WiFi baru:</div>
+            <div class="code-line"><span class="keyword">/interface wifi flat-snoop</span></div>
+            <div class="code-line"></div>
+            <div class="code-line">FREQ STATION                  SSID                    SIG  NF SNR RADIONAME   </div>
+            <div class="code-line">2412 E4:8D:8C:XX:XX:XX (ap)   MyNetwork              -56  -96 40 MT920        </div>
+            <div class="code-line">2412 AC:84:C6:XX:XX:XX        -                      -61  -96 35 -            </div>
+            <div class="code-line">2437 F4:F5:D8:XX:XX:XX (ap)   Neighbor-WiFi          -65  -96 31 -            </div>
+        </div>
+
+        <h3 class="subsection-title">Menggunakan Wireless Scanner</h3>
+        
+        <p>Dari sumber RouterOS Manual (2023), Wireless Scanner digunakan untuk memindai dan menampilkan informasi tentang access point di sekitar, termasuk SSID, sinyal, channel, dan mode keamanan.</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Menggunakan Wireless Scanner melalui CLI</div>
+            <div class="code-line"><span class="keyword">/interface wireless scan wlan1</span></div>
+            <div class="code-line comment"># Atau untuk interface WiFi baru:</div>
+            <div class="code-line"><span class="keyword">/interface wifi scan wifi1</span></div>
+            <div class="code-line"></div>
+            <div class="code-line">ADDRESS             SSID                    FREQUENCY SIG... RADIO-NAME</div>
+            <div class="code-line">E4:8D:8C:XX:XX:XX  MyNetwork               2412MHz   -56   MT920</div>
+            <div class="code-line">F4:F5:D8:XX:XX:XX  Neighbor-WiFi           2437MHz   -65   MT760</div>
+        </div>
+
+        <h3 class="subsection-title">Monitoring Trafik dengan Torch</h3>
+        
+        <p>Dari sumber MikroTik Network Monitoring (2022), Torch adalah alat bawaan MikroTik yang sangat berguna untuk memonitor trafik secara real-time pada interface, termasuk interface wireless.</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Menggunakan Torch untuk monitoring trafik wireless</div>
+            <div class="code-line"><span class="keyword">/tool torch wlan1</span></div>
+            <div class="code-line"></div>
+            <div class="code-line">TX                                         RX</div>
+            <div class="code-line">PACKET   IP SRC          DST-MAC        PACKET   IP SRC          DST-MAC</div>
+            <div class="code-line">153kbps  192.168.88.10   AC:84:C6:XX:XX 42kbps   192.168.88.1    E4:8D:8C:XX:XX</div>
+        </div>
+
+        <h3 class="subsection-title">Script Monitoring Menyeluruh</h3>
+        
+        <p>Dari sumber MikroTik Script Repository (2023), berikut adalah script komprehensif untuk monitoring dan logging status wireless secara keseluruhan:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line comment"># Script comprehensive monitoring wireless status</div>
+            <div class="code-line"><span class="keyword">:local logFileName "wireless-status"</span></div>
+            <div class="code-line"></div>
+            <div class="code-line"><span class="keyword">/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="keyword">:log info "===== WIRELESS STATUS REPORT $[/system clock get date] $[/system clock get time] ====="</span></div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Log client count</div>
+            <div class="code-line"><span class="keyword">:local clientCount [/interface wireless registration-table print count]</span></div>
+            <div class="code-line"><span class="keyword">:log info "Total wireless clients connected: $clientCount"</span></div>
+            <div class="code-line"></div>
+            <div class="code-line comment"># Log status per client</div>
+            <div class="code-line"><span class="keyword">:foreach i in=[find] do={</span></div>
+            <div class="code-line">    <span class="keyword">:local mac [get $i mac-address]</span></div>
+            <div class="code-line">    <span class="keyword">:local interface [get $i interface]</span></div>
+            <div class="code-line">    <span class="keyword">:local signal [get $i signal-strength]</span></div>
+            <div class="code-line">    <span class="keyword">:local txrate [get $i tx-rate]</span></div>
+            <div class="code-line">    <span class="keyword">:local rxrate [get $i rx-rate]</span></div>
+            <div class="code-line">    <span class="keyword">:local uptime [get $i uptime]</span></div>
+            <div class="code-line">    <span class="keyword">:local txccq [get $i tx-ccq]</span></div>
+            <div class="code-line">    <span class="keyword">:local rxccq [get $i rx-ccq]</span></div>
+            <div class="code-line">    </div>
+            <div class="code-line">    <span class="keyword">:log info "Client: $mac on $interface - Signal: $signal, TX/RX Rate: $txrate/$rxrate, CCQ: $txccq%/$rxccq%, Uptime: $uptime"</span></div>
+            <div class="code-line">    </div>
+            <div class="code-line">    <span class="keyword">:if ([:pick $signal 0 [:find $signal "dBm"]] < -70) do={</span></div>
+            <div class="code-line">        <span class="keyword">:log warning "Poor signal for client $mac: $signal"</span></div>
+            <div class="code-line">    <span class="keyword">}</span></div>
+            <div class="code-line">    </div>
+            <div class="code-line">    <span class="keyword">:if ($txccq < 70 || $rxccq < 70) do={</span></div>
+            <div class="code-line">        <span class="keyword">:log warning "Poor CCQ for client $mac: TX/RX CCQ = $txccq%/$rxccq%"</span></div>
+            <div class="code-line">    <span class="keyword">}</span></div>
+            <div class="code-line"><span class="keyword">}</span></div>
+        </div>
+        
+        <p>Untuk menjadwalkan monitoring status secara berkala:</p>
+        
+        <div class="code-terminal">
+            <div class="code-line"><span class="keyword">/system scheduler add name="Wireless Status Monitor" interval=30m on-event=</span></div>
+            <div class="code-line"><span class="string">"/interface wireless registration-table</span></div>
+            <div class="code-line"><span class="string">:log info \"===== WIRELESS STATUS REPORT $[/system clock get date] $[/system clock get time] =====\"</span></div>
+            <div class="code-line"><span class="string">:local clientCount [print count]</span></div>
+            <div class="code-line"><span class="string">:log info \"Total wireless clients: $clientCount\"</span></div>
+            <div class="code-line"><span class="string">:foreach i in=[find] do={</span></div>
+            <div class="code-line"><span class="string">    :local mac [get $i mac-address]</span></div>
+            <div class="code-line"><span class="string">    :local signal [get $i signal-strength]</span></div>
+            <div class="code-line"><span class="string">    :local txccq [get $i tx-ccq]</span></div>
+            <div class="code-line"><span class="string">    :log info \"Client $mac - Signal: $signal, CCQ: $txccq%\"</span></div>
+            <div class="code-line"><span class="string">}"</span></div>
+        </div>
+
+        <div class="security-alert">
+            <p>Dalam jaringan wireless yang sibuk, log yang dihasilkan oleh script monitoring menyeluruh dapat tumbuh dengan cepat. Pertimbangkan untuk menggunakan external logging server atau secara berkala membersihkan log yang sudah lama untuk menghindari penggunaan disk yang berlebihan pada router MikroTik.</p>
+        </div>
+
+        <div class="conclusion-box">
+            <strong>Kesimpulan Bagian Monitoring Menyeluruh:</strong> Dari 2 pendapat tersebut dapat disimpulkan bahwa MikroTik RouterOS menyediakan berbagai tools dan mekanisme untuk monitoring status wireless secara komprehensif. Dengan mengkombinasikan tools bawaan seperti Wireless Snooper, Scanner, dan Torch, serta menggunakan script otomatis, administrator dapat memperoleh gambaran lengkap tentang kondisi jaringan wireless dan mengidentifikasi masalah potensial sebelum mempengaruhi pengguna.
+        </div>
+    </div>
+
+    <!-- Bibliography -->
+    <div class="bibliography">
+        <h3>DAFTAR PUSTAKA</h3>
+        <ul>
+            <li><strong>MikroTik Documentation.</strong> 2024. <em>Wireless Interface - RouterOS</em>. <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/8978446/Wireless+Interface" target="_blank">https://help.mikrotik.com/docs/spaces/ROS/pages/8978446/Wireless+Interface</a>. Diakses pada 03 Oktober 2025, pukul 08:15 WIB.</li>
+            
+            <li><strong>MikroTik Wiki.</strong> 2023. <em>Manual:Interface/Wireless</em>. <a href="https://wiki.mikrotik.com/Manual:Interface/Wireless" target="_blank">https://wiki.mikrotik.com/Manual:Interface/Wireless</a>. Diakses pada 03 Oktober 2025, pukul 09:20 WIB.</li>
+            
+            <li><strong>MikroTik Forum.</strong> 2023. <em>How to read wireless registration table</em>. <a href="https://forum.mikrotik.com/t/how-to-read-wireless-registration-table/111397" target="_blank">https://forum.mikrotik.com/t/how-to-read-wireless-registration-table/111397</a>. Diakses pada 03 Oktober 2025, pukul 09:45 WIB.</li>
+            
+            <li><strong>RouterOS Manual.</strong> 2024. <em>WiFi - RouterOS</em>. <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/224559120/WiFi" target="_blank">https://help.mikrotik.com/docs/spaces/ROS/pages/224559120/WiFi</a>. Diakses pada 03 Oktober 2025, pukul 10:10 WIB.</li>
+
+            <li><strong>MikroTik Troubleshooting Guide.</strong> 2024. <em>Wireless Troubleshooting</em>. <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/122388523/Wireless+Troubleshooting" target="_blank">https://help.mikrotik.com/docs/spaces/ROS/pages/122388523/Wireless+Troubleshooting</a>. Diakses pada 03 Oktober 2025, pukul 10:35 WIB.</li>
+
+            <li><strong>Network Computing.</strong> 2023. <em>Understanding Wireless Connection Metrics</em>. <a href="https://www.networkcomputing.com/wireless/understanding-wireless-connection-metrics" target="_blank">https://www.networkcomputing.com/wireless/understanding-wireless-connection-metrics</a>. Diakses pada 03 Oktober 2025, pukul 11:05 WIB.</li>
+
+            <li><strong>Networking Best Practices.</strong> 2023. <em>Wireless Signal Strength Standards</em>. <a href="https://www.networkcomputing.com/wireless-infrastructure/wireless-signal-strength-standards" target="_blank">https://www.networkcomputing.com/wireless-infrastructure/wireless-signal-strength-standards</a>. Diakses pada 03 Oktober 2025, pukul 11:30 WIB.</li>
+
+            <li><strong>MikroTik Script Repository.</strong> 2023. <em>Wireless Monitoring Scripts</em>. <a href="https://github.com/jansobczak/MikroTik-Scripts/blob/master/WiFi%20monitor.rsc" target="_blank">https://github.com/jansobczak/MikroTik-Scripts/blob/master/WiFi%20monitor.rsc</a>. Diakses pada 03 Oktober 2025, pukul 12:15 WIB.</li>
+
+            <li><strong>MikroTik Forum.</strong> 2022. <em>Getting wireless interface rx signal-strength</em>. <a href="https://forum.mikrotik.com/viewtopic.php?t=87120" target="_blank">https://forum.mikrotik.com/viewtopic.php?t=87120</a>. Diakses pada 03 Oktober 2025, pukul 12:45 WIB.</li>
+
+            <li><strong>Wireless Network Engineering.</strong> 2023. <em>Understanding CCQ and Wireless Performance Metrics</em>. <a href="https://www.networkworld.com/article/3658909/understanding-ccq-wireless-metrics.html" target="_blank">https://www.networkworld.com/article/3658909/understanding-ccq-wireless-metrics.html</a>. Diakses pada 03 Oktober 2025, pukul 13:20 WIB.</li>
+
+            <li><strong>Wireless Network Design Guide.</strong> 2022. <em>Impact of TX/RX Rate on Network Performance</em>. <a href="https://www.networkworld.com/article/wireless-network-design/tx-rx-rate-impact.html" target="_blank">https://www.networkworld.com/article/wireless-network-design/tx-rx-rate-impact.html</a>. Diakses pada 03 Oktober 2025, pukul 13:50 WIB.</li>
+
+            <li><strong>MikroTik Network Monitoring.</strong> 2022. <em>Using Torch for Traffic Monitoring</em>. <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/139526175/Interface+stats+and+monitor-traffic" target="_blank">https://help.mikrotik.com/docs/spaces/ROS/pages/139526175/Interface+stats+and+monitor-traffic</a>. Diakses pada 03 Oktober 2025, pukul 14:20 WIB.</li>
+
+            <li><strong>MikroTik Script Collection.</strong> 2023. <em>Advanced Wireless Monitoring Scripts</em>. <a href="https://forum.mikrotik.com/viewtopic.php?t=142132" target="_blank">https://forum.mikrotik.com/viewtopic.php?t=142132</a>. Diakses pada 03 Oktober 2025, pukul 14:55 WIB.</li>
+        </ul>
+    </div>
 </div>
-
-
-
 
 
 
@@ -1321,3 +1514,4 @@ user-drag: none;
 </body>
 
 </html>
+
