@@ -811,6 +811,16 @@ user-drag: none;
     <!-- Section 1: Monitoring Status Registration Wireless dengan Winbox -->
     <div class="section fade-in">
         <h2 class="section-title">1. MONITORING STATUS REGISTRATION WIRELESS DENGAN WINBOX</h2>
+
+            <!-- Network Topology Section -->
+    <div class="section fade-in">
+        <h2 class="section-title">TOPOLOGI JARINGAN WIRELESS</h2>
+
+        <div class="image-container">
+            <img src="topologi.png" alt="SERVICE IP pada MikroTik RouterOS">
+            <div class="image-caption">Tampilan topologi di gns3</div>
+        </div>
+        
         
         <h3 class="subsection-title">Pengertian Registration Status</h3>
         <p>Dari sumber MikroTik Documentation (2024), status registration adalah informasi yang menampilkan detail konektivitas antara perangkat wireless client dengan access point MikroTik. Registration table menunjukkan semua perangkat yang terhubung ke access point, termasuk informasi MAC address, signal strength, connection quality, dan durasi koneksi. Pemantauan status registrasi ini sangat penting untuk mengidentifikasi masalah konektivitas dan memastikan kualitas jaringan wireless yang optimal.</p>
@@ -841,10 +851,6 @@ user-drag: none;
             <li><strong>Uptime</strong> - Durasi client terhubung ke AP</li>
         </ul>
 
-        <div class="image-container">
-            <img src="registration_detail.png" alt="Tampilan Detail Registration di Winbox MikroTik">
-            <div class="image-caption">Tampilan Detail Registration di Winbox yang menunjukkan informasi lengkap tentang client wireless.</div>
-        </div>
 
         <h3 class="subsection-title">Melihat Detail Status Registration Client</h3>
         <p>Dari sumber Wireless Networking Guide (2024), untuk melihat informasi lebih detail tentang client tertentu pada Winbox:</p>
@@ -888,6 +894,24 @@ user-drag: none;
     <!-- Section 2: Monitoring Kualitas Sinyal Wireless dengan Winbox -->
     <div class="section fade-in">
         <h2 class="section-title">2. MONITORING KUALITAS SINYAL WIRELESS DENGAN WINBOX</h2>
+
+                    <!-- Network Topology Section -->
+    <div class="section fade-in">
+        <h2 class="section-title">TOPOLOGI JARINGAN WIRELESS</h2>
+
+        <div class="image-container">
+            <img src="topologi.png" alt="SERVICE IP pada MikroTik RouterOS">
+            <div class="image-caption">Tampilan topologi di gns3</div>
+        </div>
+
+            <!-- Network Topology Section -->
+    <div class="section fade-in">
+        <h2 class="section-title">TOPOLOGI JARINGAN WIRELESS</h2>
+
+        <div class="image-container">
+            <img src="topologi.png" alt="SERVICE IP pada MikroTik RouterOS">
+            <div class="image-caption">Tampilan topologi di gns3</div>
+        </div>
 
         <h3 class="subsection-title">Parameter Kualitas Sinyal Wireless</h3>
         <p>Dari sumber MikroTik Wireless Troubleshooting (2023), kualitas sinyal wireless diukur melalui beberapa parameter utama yang menentukan kehandalan koneksi. Parameter paling penting adalah Signal Strength (kekuatan sinyal) yang diukur dalam dBm, dengan nilai ideal antara -30dBm hingga -67dBm. Nilai di atas -30dBm menunjukkan sinyal terlalu kuat yang bisa menyebabkan oversaturation, sedangkan nilai di bawah -70dBm menandakan sinyal lemah yang berpotensi menyebabkan packet loss dan koneksi tidak stabil.</p>
@@ -964,15 +988,20 @@ user-drag: none;
     <div class="section fade-in">
         <h2 class="section-title">3. MONITORING WIRELESS CLIENT YANG TERKONEKSI DENGAN WINBOX</h2>
 
+                    <!-- Network Topology Section -->
+    <div class="section fade-in">
+        <h2 class="section-title">TOPOLOGI JARINGAN WIRELESS</h2>
+
+        <div class="image-container">
+            <img src="topologi.png" alt="SERVICE IP pada MikroTik RouterOS">
+            <div class="image-caption">Tampilan topologi di gns3</div>
+        </div>
+
         <h3 class="subsection-title">Informasi Client Wireless</h3>
         <p>Dari sumber MikroTik Wireless Management (2024), monitoring client wireless yang terkoneksi memberikan visibilitas terhadap semua perangkat yang terhubung ke jaringan wireless MikroTik. Informasi ini mencakup identitas client (MAC address), alokasi IP (jika DHCP digunakan), statistik transfer data (byte/packet dikirim dan diterima), durasi koneksi, dan metode otentikasi yang digunakan. Data ini sangat penting untuk manajemen jaringan proaktif, troubleshooting, dan analisis penggunaan jaringan.</p>
         
         <p>Dari sumber Enterprise Network Monitoring (2023), pemantauan client wireless juga memungkinkan administrator untuk mengidentifikasi pola penggunaan tidak normal yang bisa mengindikasikan masalah keamanan, seperti serangan brute force, MAC spoofing, atau upaya unauthorized access. Selain itu, data historis dari monitoring client dapat digunakan untuk capacity planning, membantu administrator memahami waktu puncak penggunaan jaringan dan merencanakan upgrade atau pengembangan infrastruktur yang diperlukan.</p>
 
-        <div class="image-container">
-            <img src="client_list.png" alt="Daftar Client Wireless di Winbox MikroTik">
-            <div class="image-caption">Tampilan daftar client wireless yang terkoneksi di Winbox MikroTik dengan informasi detail koneksi.</div>
-        </div>
 
         <h3 class="subsection-title">Melihat Daftar Client yang Terkoneksi di Winbox</h3>
         <p>Untuk melihat daftar lengkap client wireless yang terkoneksi menggunakan Winbox:</p>
@@ -1009,10 +1038,7 @@ user-drag: none;
         
         <p>Fitur Torch akan menampilkan traffic real-time dari dan ke client tersebut, termasuk protokol yang digunakan, rate transfer, dan jumlah paket.</p>
 
-        <div class="image-container">
-            <img src="bandwidth_monitor.png" alt="Monitoring Bandwidth Client di Winbox MikroTik">
-            <div class="image-caption">Tampilan monitoring bandwidth client wireless menggunakan fitur Torch di Winbox MikroTik.</div>
-        </div>
+
 
         <h3 class="subsection-title">Mengidentifikasi Client dengan Koneksi Bermasalah</h3>
         <p>Dari sumber Wireless Troubleshooting Guide (2024), untuk mengidentifikasi client dengan masalah koneksi di Winbox:</p>
@@ -1068,10 +1094,7 @@ user-drag: none;
         
         <p>Dari sumber Enterprise Wireless Optimization (2023), troubleshooting efektif dimulai dengan identifikasi apakah masalah bersifat individual (hanya mempengaruhi client tertentu) atau sistemik (mempengaruhi semua client). Masalah individual sering terkait dengan jarak, penghalang fisik, atau masalah pada perangkat client itu sendiri. Masalah sistemik biasanya berkaitan dengan konfigurasi AP, interferensi dari sumber eksternal, atau overutilization jaringan. Dengan memahami pola ini, administrator dapat menerapkan pendekatan troubleshooting yang tepat.</p>
 
-        <div class="image-container">
-            <img src="wireless_snooper.png" alt="Snooper Wireless di Winbox MikroTik">
-            <div class="image-caption">Tampilan Snooper Wireless di Winbox yang menunjukkan penggunaan frekuensi di sekitar jaringan.</div>
-        </div>
+
 
         <h3 class="subsection-title">Mengidentifikasi Interferensi dengan Winbox</h3>
         <p>Dari sumber MikroTik Wireless Optimization (2024), untuk mengidentifikasi interferensi menggunakan Winbox:</p>
@@ -1102,10 +1125,7 @@ user-drag: none;
             <li>Klik <strong>OK</strong> untuk menyimpan perubahan</li>
         </ol>
 
-        <div class="image-container">
-            <img src="channel_setting.png" alt="Pengaturan Channel dan Tx Power di Winbox MikroTik">
-            <div class="image-caption">Tampilan pengaturan Channel dan Tx Power di Winbox untuk optimasi jaringan wireless.</div>
-        </div>
+
 
         <h3 class="subsection-title">Monitoring Performa Setelah Optimasi</h3>
         <p>Dari sumber Wireless Network Performance (2023), untuk memverifikasi efektivitas optimasi:</p>
@@ -1385,3 +1405,4 @@ user-drag: none;
         });
     });
 </script>
+
